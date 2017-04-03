@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <cmath>
 #include "sprite.h"
-#include "multisprite.h"
+#include "player.h"
 #include "gamedata.h"
 #include "engine.h"
 #include "frameGenerator.h"
@@ -27,12 +27,13 @@ Engine::Engine() :
   world2("back2", Gamedata::getInstance().getXmlInt("back2/factor") ),
   viewport( Viewport::getInstance() ),
   sprites(),
+  player(new Player("playership")),
   currentSprite(-1),
   radians(), counter(),
 
   makeVideo( false )
 {
-  sprites.push_back( new MultiSprite("playership") );
+  sprites.push_back(player);
   sprites.push_back( new Sprite("crystal") );
   switchSprite();
   std::cout << "Loading complete" << std::endl;
@@ -108,6 +109,27 @@ void Engine::play() {
           std::cout << "Terminating frame capture" << std::endl;
           makeVideo = false;
         }
+      }
+      // Player control
+      player->setVelocityX(0);
+      player->setVelocityY(0);
+      if ( keystate[SDL_SCANCODE_LEFT] && keystate[SDL_SCANCODE_RIGHT] ) {
+
+      }
+      else if ( keystate[SDL_SCANCODE_LEFT] ) {
+        player->setVelocityX(player->getVelocityX() - 200);
+      }
+      else if ( keystate[SDL_SCANCODE_RIGHT] ) {
+        player->setVelocityX(player->getVelocityX() + 200);
+      }
+      if ( keystate[SDL_SCANCODE_UP] && keystate[SDL_SCANCODE_DOWN] ) {
+
+      }
+      else if ( keystate[SDL_SCANCODE_UP] ) {
+        player->setVelocityY(player->getVelocityY() - 200);
+      }
+      else if ( keystate[SDL_SCANCODE_DOWN] ) {
+        player->setVelocityY(player->getVelocityY() + 200);
       }
     }
     ticks = clock.getElapsedTicks();

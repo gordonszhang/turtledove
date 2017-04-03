@@ -24,6 +24,7 @@ private:
   Viewport& viewport;
 
   std::vector<Drawable*> sprites;
+  Drawable* player;
 
   int currentSprite;
   float radians;

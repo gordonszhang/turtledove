@@ -10,13 +10,14 @@ public:
   SDL_Renderer* getRenderer() const { return renderer; }
 
   Frame* getFrame(const std::string& n) {
-    return FrameFactory::getInstance()->getFrame(n);
+    return factory->getFrame(n);
   }
   std::vector<Frame*> getFrames(const std::string& n) {
-    return FrameFactory::getInstance()->getFrames(n);
+    return factory->getFrames(n);
   }
 private:
   static RenderContext* instance;
+  FrameFactory* factory;
   SDL_Window* window;
   SDL_Renderer* renderer;
 

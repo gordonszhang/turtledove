@@ -6,15 +6,14 @@
 #include "unpack.h"
 
 class FrameFactory {
-private:
-friend class RenderContext;
-
+public:
   static FrameFactory* getInstance();
   ~FrameFactory();
 
   Frame* getFrame(const std::string&);
   std::vector<Frame*> getFrames(const std::string&);
-
+  
+private:
   static FrameFactory* instance;
   const Gamedata& gdata;
   std::map<std::string, SDL_Texture*> textures;

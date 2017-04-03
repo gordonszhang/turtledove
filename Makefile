@@ -17,7 +17,7 @@ OBJS = \
 	frameFactory.o \
 	frameGenerator.o \
 	sprite.o \
-	multisprite.o \
+	player.o \
 	vector2f.o \
 	clock.o \
 	engine.o \

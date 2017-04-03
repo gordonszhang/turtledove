@@ -1,6 +1,7 @@
 #include "renderContext.h"
 
-RenderContext::RenderContext() : window(nullptr), renderer(nullptr),
+RenderContext::RenderContext() : factory(FrameFactory::getInstance()), 
+	window(nullptr), renderer(nullptr),
 	WIDTH(Gamedata::getInstance().getXmlInt("view/width")),
 	HEIGHT(Gamedata::getInstance().getXmlInt("view/height")) {
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ) {
