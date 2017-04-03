@@ -1,0 +1,28 @@
+Name:
+Gordon Zhang
+
+Clemson Email Address:
+gordonz@clemson.edu
+
+Project no:
+3
+
+Project due date:
+03/10/17
+
+Project description:
+SDL Project 3, an extension of the tracker framework featuring parallax scrolling,
+two-way multi-frame sprites, and a dozen other optimizations.
+
+Animation consists of a crystal emitting a flurry of bullets, and a ship
+strafing back and forth (two-way multi-frame sprite).
+
+The easiest part of this project:
+Fixing code to meet Meyers's standards
+
+Problems that I had in completing this project:
+Making the assets--I had the base ship leftover from last project, but had to
+animate in-between turning frames and the little booster flares.
+
+Implementing these transitions within the constraints of the program took me a
+while.
