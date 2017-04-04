@@ -11,6 +11,7 @@ public:
 
 private:
   friend class Engine;
+  friend class HUD;
 
   bool started;
   bool paused;

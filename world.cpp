@@ -2,13 +2,13 @@
 #include "world.h"
 #include "renderContext.h"
 
-World::World(const std::string& name, int fact) : 
+World::World(const std::string& name, int fact) :
   frame( RenderContext::getInstance()->getFrame(name) ),
   factor(fact),
     worldWidth( Gamedata::getInstance().getXmlInt("world/width") ),
     frameWidth( frame->getWidth() ),
-    viewX(0.0), viewY(0.0), 
-    view(Viewport::getInstance()) 
+    viewX(0.0), viewY(0.0),
+    view(Viewport::getInstance())
 { }
 
 void World::update() {
@@ -16,8 +16,7 @@ void World::update() {
   viewY = view.getY();
 }
 
-void World::draw() const { 
+void World::draw() const {
   frame->draw(0,0,-viewX,-viewY);
   frame->draw(0,0,frameWidth-viewX,-viewY);
 }
-

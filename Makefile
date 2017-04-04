@@ -17,10 +17,12 @@ OBJS = \
 	frameFactory.o \
 	frameGenerator.o \
 	sprite.o \
+	bullet.o \
 	player.o \
 	vector2f.o \
 	clock.o \
 	engine.o \
+	hud.o \
 	main.o
 EXEC = run
 

@@ -1,9 +1,9 @@
 #include <cmath>
-#include "sprite.h"
+#include "bullet.h"
 #include "gamedata.h"
 #include "renderContext.h"
 
-Sprite::Sprite(const std::string& name) :
+Bullet::Bullet(const std::string& name) :
   Drawable(name,
            Vector2f(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"),
                     Gamedata::getInstance().getXmlInt(name+"/startLoc/y")),
@@ -14,11 +14,10 @@ Sprite::Sprite(const std::string& name) :
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   frameWidth(frame->getWidth()),
-  frameHeight(frame->getHeight()),
-  size(0)
+  frameHeight(frame->getHeight())
 { }
 
-Sprite::Sprite(const std::string& name, float vX, float vY) :
+Bullet::Bullet(const std::string& name, float vX, float vY) :
   Drawable(name,
            Vector2f(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"),
                     Gamedata::getInstance().getXmlInt(name+"/startLoc/y")),
@@ -28,21 +27,19 @@ Sprite::Sprite(const std::string& name, float vX, float vY) :
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   frameWidth(frame->getWidth()),
-  frameHeight(frame->getHeight()),
-  size(0)
+  frameHeight(frame->getHeight())
 { }
 
-Sprite::Sprite(const Sprite& s) :
+Bullet::Bullet(const Bullet& s) :
   Drawable(s),
   frame(s.frame),
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   frameWidth(s.getFrame()->getWidth()),
-  frameHeight(s.getFrame()->getHeight()),
-  size(s.size)
+  frameHeight(s.getFrame()->getHeight())
 { }
 
-Sprite& Sprite::operator=(const Sprite& rhs) {
+Bullet& Bullet::operator=(const Bullet& rhs) {
   if(this == &rhs) return *this;
   Drawable::operator=( rhs );
   frame = rhs.frame;
@@ -50,31 +47,14 @@ Sprite& Sprite::operator=(const Sprite& rhs) {
   worldHeight = rhs.worldHeight;
   frameWidth = rhs.frameWidth;
   frameHeight = rhs.frameHeight;
-  size = rhs.size;
   return *this;
 }
 
-void Sprite::draw() const {
+void Bullet::draw() const {
   frame->draw(getX(), getY());
 }
 
-void Sprite::update(Uint32 ticks) {
+void Bullet::update(Uint32 ticks) {
   Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
   setPosition(getPosition() + incr);
-  /*
-  if ( getY() < 0) {
-    setVelocityY( std::abs( getVelocityY() ) );
-  }
-  */
-  if ( getX() > worldWidth-frameWidth) {
-    setX(0);
-  }
-  /*
-  if ( getX() < 0) {
-    setVelocityX( std::abs( getVelocityX() ) );
-  }
-  if ( getX() > worldWidth-frameWidth) {
-    setVelocityX( -std::abs( getVelocityX() ) );
-  }
-  */
 }

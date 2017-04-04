@@ -1,10 +1,8 @@
 #include <vector>
 #include <SDL.h>
-#include "ioMod.h"
-#include "renderContext.h"
-#include "clock.h"
 #include "world.h"
 #include "viewport.h"
+#include "hud.h"
 
 class Engine {
 public:
@@ -21,6 +19,7 @@ private:
   SDL_Renderer * const renderer;
   World world;
   World world2;
+  HUD hud;
   Viewport& viewport;
 
   std::vector<Drawable*> sprites;
@@ -30,6 +29,7 @@ private:
   float radians;
   int counter;
   bool makeVideo;
+  bool showHUD;
 
   void draw() const;
   void update(Uint32);

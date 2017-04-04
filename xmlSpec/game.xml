@@ -91,13 +91,67 @@
   <transparency>true</transparency>
 </playershipTL>
 
-<star>
-  <file>images/yellowstar32.png</file>
-  <startLoc x="10" y="10"/>
-  <speedX>-175</speedX>
-  <speedY>-175</speedY>
+<playershipUR>
+  <file>images/playershipUR.png</file>
+  <frames>2</frames>
+  <frameInterval>100</frameInterval>
   <transparency>true</transparency>
-</star>
+</playershipUR>
+
+<playershipUL>
+  <file>images/playershipUL.png</file>
+  <frames>2</frames>
+  <frameInterval>100</frameInterval>
+  <transparency>true</transparency>
+</playershipUL>
+
+<tiny_star_1>
+  <file>images/tiny_star_1.png</file>
+  <startLoc x="0" y="0"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <transparency>false</transparency>
+</tiny_star_1>
+
+<tiny_star_2>
+  <file>images/tiny_star_2.png</file>
+  <startLoc x="0" y="0"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <transparency>false</transparency>
+</tiny_star_2>
+
+<small_star_1>
+  <file>images/small_star_1.png</file>
+  <startLoc x="0" y="0"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <transparency>false</transparency>
+</small_star_1>
+
+<small_star_2>
+  <file>images/small_star_2.png</file>
+  <startLoc x="0" y="0"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <transparency>false</transparency>
+</small_star_2>
+
+<small_star_3>
+  <file>images/small_star_3.png</file>
+  <startLoc x="0" y="0"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <transparency>false</transparency>
+</small_star_3>
+
+<big_star>
+  <file>images/big_star.png</file>
+  <startLoc x="0" y="0"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <transparency>false</transparency>
+</big_star>
 
 <crystal>
   <file>images/crystal.png</file>

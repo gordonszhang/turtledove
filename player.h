@@ -22,6 +22,8 @@ protected:
   const std::vector<Frame *> framesLeft;
   const std::vector<Frame *> framesTransitionRight;
   const std::vector<Frame *> framesTransitionLeft;
+  const std::vector<Frame *> framesTurnRight;
+  const std::vector<Frame *> framesTurnLeft;
   std::vector<Frame *> selectedFrames;
 
   unsigned currentFrame;

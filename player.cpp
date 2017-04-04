@@ -22,6 +22,8 @@ Player::Player( const std::string& name) :
 	framesLeft(RenderContext::getInstance()->getFrames(name+"L")),
 	framesTransitionRight(RenderContext::getInstance()->getFrames(name+"TR")),
 	framesTransitionLeft(RenderContext::getInstance()->getFrames(name+"TL")),
+  framesTurnRight(RenderContext::getInstance()->getFrames(name+"UR")),
+	framesTurnLeft(RenderContext::getInstance()->getFrames(name+"UL")),
 	selectedFrames(frames),
   currentFrame(0),
   numberOfFrames( Gamedata::getInstance().getXmlInt(name+"/frames") ),
@@ -41,6 +43,8 @@ Player::Player(const Player& s) :
 	framesLeft(s.framesLeft),
 	framesTransitionRight(s.framesTransitionRight),
 	framesTransitionLeft(s.framesLeft),
+  framesTurnRight(s.framesTurnRight),
+	framesTurnLeft(s.framesTurnLeft),
 	selectedFrames(s.selectedFrames),
   currentFrame(s.currentFrame),
   numberOfFrames( s.numberOfFrames ),
@@ -65,24 +69,28 @@ void Player::update(Uint32 ticks) {
   setPosition(getPosition() + incr);
 
   if ( getY() < 0) {
-    setVelocityY( fabs( getVelocityY() ) );
+    setY(0);
   }
   if ( getY() > worldHeight-frameHeight) {
-    setVelocityY( -fabs( getVelocityY() ) );
+    setY(worldHeight-frameHeight);
   }
 
   if ( getX() < 0) {
-    setVelocityX( fabs( getVelocityX() ) );
+    setX(0);
   }
   if ( getX() > worldWidth-frameWidth) {
-    setVelocityX( -fabs( getVelocityX() ) );
+    setX(worldWidth-frameWidth);
   }
 	if(getVelocityX() > 0) {
-		if(state <= 0) {
+		if(state < 0) {
 			state = 1;
 			selectedFrames = framesTransitionRight;
 		}
-		else if(state >= 0 && state < 5) {
+    else if(state == 0) {
+      state = 3;
+      selectedFrames = framesTurnRight;
+    }
+		else if(state > 0 && state < 5) {
 			++state;
 		}
 		else if (state == 5) {
@@ -96,11 +104,15 @@ void Player::update(Uint32 ticks) {
     selectedFrames = frames;
   }
 	if(getVelocityX() < 0) {
-		if(state >= 0) {
+		if(state > 0) {
 			state = -1;
 			selectedFrames = framesTransitionLeft;
 		}
-		else if(state <= 0 && state > -5) {
+    else if(state == 0) {
+      state = -3;
+      selectedFrames = framesTurnLeft;
+    }
+		else if(state < 0 && state > -5) {
 			--state;
 		}
 		else if (state == -5) {
