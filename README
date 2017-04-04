@@ -11,18 +11,27 @@ Project due date:
 03/10/17
 
 Project description:
-SDL Project 3, an extension of the tracker framework featuring parallax scrolling,
-two-way multi-frame sprites, and a dozen other optimizations.
+SDL Project 4, an extension of the tracker framework featuring player control,
+a toggleable HUD, and the Painter's algorithm.
 
 Animation consists of a crystal emitting a flurry of bullets, and a ship
 strafing back and forth (two-way multi-frame sprite).
 
+==Game Concept==
+My game will be a vertically scrolling space shoot-em-up, featuring gameplay
+elements from the classic game Ikaruga.
+
+Enemies of two energy types will appear, firing bullets of black and white energy.
+The player ship will have access to a shield that absorbs either white or black
+energy (may toggle between the two). Being hit by a bullet of the opposite color
+results in the loss of a life.
+
+The player will shoot enemies and dodge bullets throughout a short level, before
+facing a boss at the end of the stage. This boss will take the gameplay elements
+the player has learned and stretch the player's limits to execute them.
+
 The easiest part of this project:
-Fixing code to meet Meyers's standards
+Adding player control
 
 Problems that I had in completing this project:
-Making the assets--I had the base ship leftover from last project, but had to
-animate in-between turning frames and the little booster flares.
-
-Implementing these transitions within the constraints of the program took me a
-while.
+Adding Painter's, mostly sorting the object pointers and handling their creation

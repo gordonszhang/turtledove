@@ -19,16 +19,12 @@ public:
   virtual void draw() const;
   virtual void update(Uint32 ticks);
 
-  int getSize() const { return size; }
-  void setSize(int s) { size = s; }
-
 private:
   const Frame * frame;
   int worldWidth;
   int worldHeight;
   int frameWidth;
   int frameHeight;
-  int size;
   int getDistance(const Sprite*) const;
 };
 #endif

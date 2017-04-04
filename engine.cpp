@@ -12,12 +12,18 @@
 #include "engine.h"
 #include "frameGenerator.h"
 
+class DrawComp {
+public:
+  bool operator()(const Drawable *lhs, const Drawable* rhs) const {
+    return lhs->getSize() < rhs->getSize();
+  }
+};
+
+
 Engine::~Engine() {
   std::cout << "Terminating program" << std::endl;
-  std::vector<Drawable*>::iterator it = sprites.begin();
-  while ( it != sprites.end() ) {
-    delete *it;
-    ++it;
+  for(auto* s : sprites) {
+    delete s;
   }
 }
 
@@ -37,8 +43,11 @@ Engine::Engine() :
   makeVideo( false ),
   showHUD(true)
 {
+  player->setSize(4);
   sprites.push_back(player);
+  switchSprite();
   sprites.push_back( new Sprite("crystal") );
+  sprites[1]->setSize(4);
 
   std::random_device rd;
   std::mt19937 mt(rd());
@@ -60,6 +69,7 @@ Engine::Engine() :
       s->setX(new_x);
       s->setY(new_y);
       s->setVelocityX(5);
+      s->setSize(1);
       sprites.push_back(s);
     }
   }
@@ -80,11 +90,12 @@ Engine::Engine() :
       s->setY(new_y);
       float speed_mod = 1.0 + dist(mt);
       s->setVelocityX(10 * speed_mod);
+      s->setSize(2);
       sprites.push_back(s);
     }
   }
 
-  unsigned int no_big = 7;
+  unsigned int no_big = 10;
   for(unsigned int i = 0; i < no_big; ++i) {
     for(unsigned int j = 0; j < no_big; ++j) {
       auto* s = new Sprite("big_star");
@@ -96,17 +107,18 @@ Engine::Engine() :
       s->setY(new_y);
       float speed_mod = 1.0 + dist(mt);
       s->setVelocityX(30 * speed_mod);
+      s->setSize(3);
       sprites.push_back(s);
     }
   }
 
-  switchSprite();
+  sort(sprites.begin(), sprites.end(), DrawComp());
+
   std::cout << "Loading complete" << std::endl;
 }
 
 void Engine::draw() const {
   world.draw();
-  //world2.draw();
 
   for(auto* s : sprites) s->draw();
   if(showHUD) hud.draw();

@@ -12,10 +12,10 @@
 class Drawable {
 public:
   Drawable(const std::string& n, const Vector2f& pos, const Vector2f& vel):
-    name(n), position(pos), velocity(vel) {}
+    name(n), position(pos), velocity(vel), size() {}
 
   Drawable(const Drawable& s) :
-    name(s.name), position(s.position), velocity(s.velocity)
+    name(s.name), position(s.position), velocity(s.velocity), size(s.size)
     { }
 
   virtual ~Drawable() {}
@@ -44,9 +44,13 @@ public:
   const Vector2f& getPosition() const    { return position; }
   void  setPosition(const Vector2f& pos) { position = pos;  }
 
+  int getSize() const { return size; }
+  void setSize(int s) { size = s; }
+
 private:
   std::string name;
   Vector2f position;
   Vector2f velocity;
+  int size;
 };
 #endif

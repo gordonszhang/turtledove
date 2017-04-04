@@ -55,7 +55,7 @@
 
 <playership>
   <file>images/playership.png</file>
-  <startLoc x="120" y="300"/>
+  <startLoc x="718" y="300"/>
   <frames>4</frames>
   <frameInterval>100</frameInterval>
   <speedX>200</speedX>
