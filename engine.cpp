@@ -6,7 +6,6 @@
 #include <random>
 #include <algorithm>
 #include "sprite.h"
-#include "bullet.h"
 #include "player.h"
 #include "gamedata.h"
 #include "engine.h"

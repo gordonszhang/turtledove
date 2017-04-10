@@ -3,6 +3,7 @@
 #include "world.h"
 #include "viewport.h"
 #include "hud.h"
+#include "bullet.h"
 
 class Engine {
 public:
