@@ -23,6 +23,10 @@ private:
   Viewport& viewport;
 
   std::vector<Drawable*> sprites;
+  std::vector<Bullet*> bullets;
+  std::vector<Drawable*> enemies;
+  std::queue<int> freeBullets;
+  std::queue<int> freeEnemies;
   Drawable* player;
 
   int currentSprite;

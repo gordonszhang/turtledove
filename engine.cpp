@@ -37,6 +37,10 @@ Engine::Engine() :
   hud(),
   viewport( Viewport::getInstance() ),
   sprites(),
+  bullets(),
+  enemies(),
+  freeBullets(),
+  freeEnemies(),
   player(new Player("playership")),
   currentSprite(-1),
   radians(), counter(),
@@ -121,6 +125,7 @@ void Engine::draw() const {
   world.draw();
 
   for(auto* s : sprites) s->draw();
+  for(auto* b : bullets) b->draw();
   if(showHUD) hud.draw();
   viewport.draw();
 
@@ -131,7 +136,14 @@ void Engine::update(Uint32 ticks) {
   for(auto* s : sprites) {
     s->update(ticks);
   }
-
+  for(int i = 0; i < (int)bullets.size(); ++i) {
+    auto* s = bullets[i];
+    if(s->isAlive()) {
+      s->update(ticks);
+      if(!s->isAlive()) freeBullets.push(i);
+    }
+  }
+  hud.updateCounts(bullets.size() - freeBullets.size(), freeBullets.size());
   world.update();
   world2.update();
   viewport.update(); // always update viewport last
@@ -219,15 +231,20 @@ void Engine::play() {
     }
     ticks = clock.getElapsedTicks();
     if ( ticks > 0 ) {
-      if(counter % 16 == 0 && counter < 160) {
+      //if(counter % 16 == 0 && counter < 160) {
       for(int i = 0; i < 8; ++i) {
         float velX = 100.0 * cos(radians + i * (M_PI / 4.0));
         float velY = 100.0 * sin(radians + i * (M_PI / 4.0));
-        sprites.push_back( new Bullet("bullet", velX, velY));
+        if(freeBullets.size()) {
+          int f = freeBullets.front();
+          freeBullets.pop();
+          bullets[f]->reset(velX, velY);
+        }
+        else bullets.push_back( new Bullet("bullet", velX, velY));
       }
       radians += M_PI / 32.0;
-      }
-      ++counter;
+      //}
+      //++counter;
       clock.incrFrame();
       draw();
       update(ticks);

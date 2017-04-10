@@ -14,7 +14,8 @@ Bullet::Bullet(const std::string& name) :
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   frameWidth(frame->getWidth()),
-  frameHeight(frame->getHeight())
+  frameHeight(frame->getHeight()),
+  alive(true)
 { }
 
 Bullet::Bullet(const std::string& name, float vX, float vY) :
@@ -27,7 +28,8 @@ Bullet::Bullet(const std::string& name, float vX, float vY) :
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   frameWidth(frame->getWidth()),
-  frameHeight(frame->getHeight())
+  frameHeight(frame->getHeight()),
+  alive(true)
 { }
 
 Bullet::Bullet(const Bullet& s) :
@@ -36,7 +38,8 @@ Bullet::Bullet(const Bullet& s) :
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   frameWidth(s.getFrame()->getWidth()),
-  frameHeight(s.getFrame()->getHeight())
+  frameHeight(s.getFrame()->getHeight()),
+  alive(s.alive)
 { }
 
 Bullet& Bullet::operator=(const Bullet& rhs) {
@@ -47,6 +50,7 @@ Bullet& Bullet::operator=(const Bullet& rhs) {
   worldHeight = rhs.worldHeight;
   frameWidth = rhs.frameWidth;
   frameHeight = rhs.frameHeight;
+  alive = rhs.alive;
   return *this;
 }
 
@@ -57,4 +61,18 @@ void Bullet::draw() const {
 void Bullet::update(Uint32 ticks) {
   Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
   setPosition(getPosition() + incr);
+
+  if(getX() < (-frameWidth) || getX() > worldWidth
+  || getY() < (-frameHeight) || getY() > worldHeight) {
+    alive = false;
+  }
+
+}
+
+void Bullet::reset(float vX, float vY) {
+  alive = true;
+  setVelocityX(vX);
+  setVelocityY(vY);
+  setX(Gamedata::getInstance().getXmlInt(getName()+"/startLoc/x"));
+  setY(Gamedata::getInstance().getXmlInt(getName()+"/startLoc/y"));
 }
