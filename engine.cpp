@@ -44,7 +44,8 @@ Engine::Engine() :
   currentSprite(-1),
   radians(), counter(),
   makeVideo( false ),
-  showHUD(true)
+  showHUD(true),
+  strategy( new PerPixelCollisionStrategy )
 {
   player->setSize(4);
   sprites.push_back(player);
@@ -148,6 +149,18 @@ void Engine::update(Uint32 ticks) {
   viewport.update(); // always update viewport last
 }
 
+void Engine::checkForCollisions() {
+  std::vector<Drawable*>::const_iterator it = bullets.begin();
+  Drawable* player = sprites[0];
+  while ( it != bullets.end() ) {
+    if ( strategy->execute(*player, **it) ) {
+      //std::cout << "collision: " << ++collisions << std::endl;
+      //m++collisions;
+    }
+    ++it;
+  }
+}
+
 void Engine::switchSprite(){
   ++currentSprite;
   currentSprite = currentSprite % sprites.size();
@@ -239,7 +252,7 @@ void Engine::play() {
           freeBullets.pop();
           bullets[f]->reset(velX, velY);
         }
-        else bullets.push_back( new Bullet("bullet", velX, velY));
+        else bullets.push_back( new Bullet("bullet", 1000, 0));
       }
       radians += M_PI / 32.0;
       //}

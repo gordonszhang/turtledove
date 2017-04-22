@@ -11,6 +11,7 @@ FrameFactory::~FrameFactory() {
   // Free single frame containers
   for(auto& ti : textures) SDL_DestroyTexture(ti.second);
   for(auto& fi : frames  ) delete fi.second;
+   for(auto& si : surfaces) SDL_FreeSurface(si.second);
 
   // Free multi-frame containers
   /*
@@ -42,6 +43,21 @@ FrameFactory::~FrameFactory() {
     for(auto& fi : mf.second) {
       delete fi;
     }
+  }
+}
+
+SDL_Surface* FrameFactory::getSurface(const std::string& name) {
+    std::map<std::string, SDL_Surface*>::const_iterator it =
+      surfaces.find(name);
+  if ( it == surfaces.end() ) {
+    SDL_Surface * const surface =
+      IOmod::getInstance().readSurface( gdata.getXmlStr(name+"/file"));
+    surfaces[name] = surface;
+    surfaces[name] = surface;
+    return surface;
+  }
+  else {
+    return it->second;
   }
 }
 

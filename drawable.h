@@ -5,6 +5,7 @@
 #include <string>
 #include "vector2f.h"
 #include "frame.h"
+#include "gamedata.h"
 
 // Drawable is an Abstract Base Class (ABC) that
 // specifies the methods that derived classes may
@@ -12,10 +13,10 @@
 class Drawable {
 public:
   Drawable(const std::string& n, const Vector2f& pos, const Vector2f& vel):
-    name(n), position(pos), velocity(vel), size() {}
+    name(n), position(pos), velocity(vel), size(), alive(true) {}
 
   Drawable(const Drawable& s) :
-    name(s.name), position(s.position), velocity(s.velocity), size(s.size)
+    name(s.name), position(s.position), velocity(s.velocity), size(s.size), alive(true)
     { }
 
   virtual ~Drawable() {}
@@ -47,10 +48,23 @@ public:
   int getSize() const { return size; }
   void setSize(int s) { size = s; }
 
+  bool isAlive() const { return alive; };
+  void setAlive(bool status) { alive = status; };
+
+  void reset(float vX, float vY) {
+    alive = true;
+    setVelocityX(vX);
+    setVelocityY(vY);
+    setX(Gamedata::getInstance().getXmlInt(getName()+"/startLoc/x"));
+    setY(Gamedata::getInstance().getXmlInt(getName()+"/startLoc/y"));
+  }
+
+
 private:
   std::string name;
   Vector2f position;
   Vector2f velocity;
   int size;
+  bool alive;
 };
 #endif

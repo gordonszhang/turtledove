@@ -14,15 +14,14 @@ public:
   virtual const Frame* getFrame() const { return frame; }
   virtual void draw() const;
   virtual void update(Uint32 ticks);
-  bool isAlive() const { return alive; };
-  void reset(float vX, float vY);
+
 private:
   const Frame * frame;
   int worldWidth;
   int worldHeight;
   int frameWidth;
   int frameHeight;
-  bool alive;
+  
   int getDistance(const Bullet*) const;
 };
 #endif

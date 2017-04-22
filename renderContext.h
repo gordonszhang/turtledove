@@ -9,6 +9,10 @@ public:
   SDL_Window* getWindow() const { return window; }
   SDL_Renderer* getRenderer() const { return renderer; }
 
+  SDL_Surface* getSurface(const std::string& n) {
+    return factory->getSurface(n);
+  }
+
   Frame* getFrame(const std::string& n) {
     return factory->getFrame(n);
   }

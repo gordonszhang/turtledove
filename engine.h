@@ -4,6 +4,7 @@
 #include "viewport.h"
 #include "hud.h"
 #include "bullet.h"
+#include "collisionStrategy.h"
 
 class Engine {
 public:
@@ -12,6 +13,7 @@ public:
   void play();
   void switchSprite();
   void backSprite();
+
 private:
   const RenderContext* rc;
   const IOmod& io;
@@ -24,7 +26,7 @@ private:
   Viewport& viewport;
 
   std::vector<Drawable*> sprites;
-  std::vector<Bullet*> bullets;
+  std::vector<Drawable*> bullets;
   std::vector<Drawable*> enemies;
   std::queue<int> freeBullets;
   std::queue<int> freeEnemies;
@@ -35,9 +37,11 @@ private:
   int counter;
   bool makeVideo;
   bool showHUD;
+  CollisionStrategy* strategy;
 
   void draw() const;
   void update(Uint32);
+  void checkForCollisions();
 
   Engine(const Engine&) = delete;
   Engine& operator=(const Engine&) = delete;
