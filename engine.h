@@ -5,6 +5,7 @@
 #include "hud.h"
 #include "bullet.h"
 #include "collisionStrategy.h"
+#include "explodingSprite.h"
 
 class Engine {
 public:

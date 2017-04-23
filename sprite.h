@@ -16,6 +16,7 @@ public:
   Sprite& operator=(const Sprite&);
 
   virtual const Frame* getFrame() const { return frame; }
+  virtual void setFrame(Frame* f) { frame = f; }; 
   virtual void draw() const;
   virtual void update(Uint32 ticks);
 

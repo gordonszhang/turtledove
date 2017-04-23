@@ -151,11 +151,16 @@ void Engine::update(Uint32 ticks) {
 
 void Engine::checkForCollisions() {
   std::vector<Drawable*>::const_iterator it = bullets.begin();
-  Drawable* player = sprites[0];
+  //Drawable* player = sprites[0];
+  int collisions = 0;
   while ( it != bullets.end() ) {
     if ( strategy->execute(*player, **it) ) {
       //std::cout << "collision: " << ++collisions << std::endl;
-      //m++collisions;
+      ++collisions;
+      hud.updateCollisions(collisions);
+      Drawable* boom = new ExplodingSprite(*static_cast<Sprite*>(sprites[0]));
+          delete player;
+          player = boom;
     }
     ++it;
   }
@@ -243,7 +248,7 @@ void Engine::play() {
     }
     ticks = clock.getElapsedTicks();
     if ( ticks > 0 ) {
-      //if(counter % 16 == 0 && counter < 160) {
+      if(counter % 16 == 0) {
       for(int i = 0; i < 8; ++i) {
         float velX = 100.0 * cos(radians + i * (M_PI / 4.0));
         float velY = 100.0 * sin(radians + i * (M_PI / 4.0));
@@ -252,11 +257,11 @@ void Engine::play() {
           freeBullets.pop();
           bullets[f]->reset(velX, velY);
         }
-        else bullets.push_back( new Bullet("bullet", 1000, 0));
+        else bullets.push_back( new Bullet("bullet", velX, velY));
       }
       radians += M_PI / 32.0;
-      //}
-      //++counter;
+      }
+      ++counter;
       clock.incrFrame();
       draw();
       update(ticks);

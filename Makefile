@@ -17,6 +17,7 @@ OBJS = \
 	frameFactory.o \
 	frameGenerator.o \
 	sprite.o \
+	explodingSprite.o \
 	bullet.o \
 	player.o \
 	vector2f.o \
@@ -24,6 +25,7 @@ OBJS = \
 	engine.o \
 	hud.o \
 	collisionStrategy.o \
+	chunk.o \
 	main.o
 EXEC = run
 

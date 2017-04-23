@@ -61,6 +61,10 @@
   <speedX>200</speedX>
   <speedY>0</speedY>
   <transparency>true</transparency>
+   <chunk>
+      <size>9</size>
+      <distance>200</distance>
+    </chunk>
 </playership>
 
 <playershipR>
