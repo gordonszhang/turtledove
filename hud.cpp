@@ -40,7 +40,7 @@ void HUD::draw() const {
   io.writeText(f.str(), green, 40, 240);
 
   std::stringstream c;
-  f << "Collisions: " << collisions;
+  c << "Collisions: " << collisions;
   io.writeText(c.str(), white, 40, 290);
 }
 

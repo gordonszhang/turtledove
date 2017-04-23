@@ -265,6 +265,7 @@ void Engine::play() {
       clock.incrFrame();
       draw();
       update(ticks);
+      checkForCollisions();
       if ( makeVideo ) {
         frameGen.makeFrame();
       }
