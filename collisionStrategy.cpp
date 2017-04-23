@@ -102,7 +102,7 @@ SDL_Surface* scaleSurface(SDL_Surface* surf, int width, int height) {
   SDL_Rect rect = {0,0,width,height};
   int flag = SDL_BlitScaled(surf,nullptr,sub,&rect);
   if ( flag < 0 ) throw( std::string("SDL_BlitScaled failed!") );
-  std::cout << width  << ", " << surf->w << ", " << sub->w << std::endl;
+  //std::cout << width  << ", " << surf->w << ", " << sub->w << std::endl;
 
   // Set the blend mode back to original
   SDL_SetSurfaceBlendMode(surf, oldBlendMode);
@@ -157,8 +157,8 @@ bool PerPixelCollisionStrategy::execute(
 
   SDL_Surface* temp1 =
     RenderContext::getInstance()->getSurface(obj1.getName());
-  std::cout << obj1.getName() << std::endl;
-  std::cout << obj2.getName() << std::endl;
+  //std::cout << obj1.getName() << std::endl;
+  //std::cout << obj2.getName() << std::endl;
   SDL_Surface* surface1 = scaleSurface(temp1, width1, height1);
   SDL_Surface* temp2 =
     RenderContext::getInstance()->getSurface(obj2.getName());
@@ -181,7 +181,6 @@ bool PerPixelCollisionStrategy::execute(
       pixel2 = pixels2[ (j * width2) + i ];
 
       if ( isVisible(pixel1,surface1) && isVisible(pixel2,surface2) ) {
-          std::cout << "waow" << std::endl;
         SDL_UnlockSurface(surface1);
         SDL_UnlockSurface(surface2);
         SDL_FreeSurface(surface1);

@@ -52,7 +52,7 @@ Engine::Engine() :
   //switchSprite();
   Viewport::getInstance().setObjectToTrack(player);
   sprites.push_back( new Sprite("crystal") );
-  sprites[1]->setSize(4);
+  sprites[0]->setSize(4);
 
   std::random_device rd;
   std::mt19937 mt(rd());
@@ -154,23 +154,28 @@ void Engine::update(Uint32 ticks) {
 }
 
 void Engine::checkForCollisions() {
+
   std::vector<Drawable*>::const_iterator it = bullets.begin();
   int collisions = 0;
   while ( it != bullets.end() ) {
+    if(!player->isAlive()) break;
     if ( strategy->execute(*player, **it) ) {
       //std::cout << "collision: " << ++collisions << std::endl;
       ++collisions;
       hud.updateCollisions(collisions);
-      std::cout << sprites[10]->getName();
+      //std::cout << sprites[10]->getName();
       //Drawable* boom = new ExplodingSprite(*static_cast<Sprite*>(player));
       //player = boom;
       //delete player;
       //player = new Player("playership");
-      player->setAlive(false);
-        Drawable* temp = new Sprite("playership");
+
+        Drawable* temp = new Sprite("playershipE");
+        temp->setX(player->getX());
+        temp->setY(player->getY());
         Drawable* explodingSprite = new ExplodingSprite(*static_cast<Sprite*>(temp));
         player = explodingSprite;
-
+        player->setAlive(false);
+        break;
     }
     ++it;
   }

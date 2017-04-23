@@ -23,7 +23,6 @@ void ExplodingSprite::draw() const {
   // Override draw; use the draw in Chunk, which derives from Sprite.
   // So the draw we're using is actually in Sprite
   for ( Chunk* c : chunks ) {
-    std::cout << "wryyy\n";
     c->draw();
   }
 }
@@ -58,9 +57,10 @@ void ExplodingSprite::makeChunks(unsigned int n) {
     int source_x = 0;
     while ( source_x+chunk_width < getFrame()->getWidth() ) {
       // Give each chunk it's own speed/direction:
-      float sx = (rand() % speedx + 40) * (rand()%2?-1:1); // 'cause %0 is
-      float sy = (rand() % speedy + 40) * (rand()%2?-1:1); // float except
 
+      float sx = (rand() % 200) * (rand()%2?-1:1); // 'cause %0 is
+      float sy = (rand() % 200) * (rand()%2?-1:1); // float except
+//std::cout << "velocity: " << sx << ", " << sy << std::endl;
       Frame* frame = proto->crop({source_x,source_y,chunk_width,chunk_height});
       Chunk* chunk = new Chunk(
                 Vector2f(getX()+source_x,   // x coord of destination

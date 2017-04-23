@@ -66,6 +66,19 @@
   </chunk>
 </playership>
 
+<playershipE>
+  <file>images/playershipE.png</file>
+  <frameInterval>100</frameInterval>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <startLoc x="718" y="300"/>
+  <transparency>true</transparency>
+  <chunk>
+    <size>15</size>
+    <distance>100</distance>
+  </chunk>
+</playershipE>
+
 <playershipI>
   <file>images/playershipI.png</file>
   <startLoc x="718" y="300"/>
