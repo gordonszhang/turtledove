@@ -65,6 +65,10 @@ void Sprite::update(Uint32 ticks) {
   if ( getX() > worldWidth-frameWidth) {
     setX(0);
   }
+
+  if ( getY() > worldHeight-frameHeight) {
+    setY(0);
+  }
   /*
   if ( getX() < 0) {
     setVelocityX( std::abs( getVelocityX() ) );

@@ -1,3 +1,6 @@
+#ifndef EXPLODINGSPRITE__H
+#define EXPLODINGSPRITE__H
+
 #include <vector>
 #include <list>
 #include "chunk.h"
@@ -18,3 +21,5 @@ private:
   ExplodingSprite(const ExplodingSprite&); // Explicit disallow (Item 6)
   ExplodingSprite& operator=(const ExplodingSprite&); // (Item 6)
 };
+
+#endif

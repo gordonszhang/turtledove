@@ -12,10 +12,10 @@ void Player::advanceFrame(Uint32 ticks) {
 
 Player::Player( const std::string& name) :
   Drawable(name,
-           Vector2f(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"),
-                    Gamedata::getInstance().getXmlInt(name+"/startLoc/y")),
-           Vector2f(Gamedata::getInstance().getXmlInt(name+"/speedX"),
-                    Gamedata::getInstance().getXmlInt(name+"/speedY"))
+           Vector2f(Gamedata::getInstance().getXmlInt(name+"I/startLoc/x"),
+                    Gamedata::getInstance().getXmlInt(name+"I/startLoc/y")),
+           Vector2f(Gamedata::getInstance().getXmlInt(name+"I/speedX"),
+                    Gamedata::getInstance().getXmlInt(name+"I/speedY"))
            ),
   frames( RenderContext::getInstance()->getFrames(name+"I") ),
 	framesRight(RenderContext::getInstance()->getFrames(name+"R")),
@@ -26,8 +26,8 @@ Player::Player( const std::string& name) :
 	framesTurnLeft(RenderContext::getInstance()->getFrames(name+"UL")),
 	selectedFrames(frames),
   currentFrame(0),
-  numberOfFrames( Gamedata::getInstance().getXmlInt(name+"/frames") ),
-  frameInterval( Gamedata::getInstance().getXmlInt(name+"/frameInterval")),
+  numberOfFrames( Gamedata::getInstance().getXmlInt(name+"I/frames") ),
+  frameInterval( Gamedata::getInstance().getXmlInt(name+"I/frameInterval")),
   timeSinceLastFrame( 0 ),
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),

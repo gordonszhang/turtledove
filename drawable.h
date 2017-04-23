@@ -59,12 +59,12 @@ public:
     setY(Gamedata::getInstance().getXmlInt(getName()+"/startLoc/y"));
   }
 
-
 private:
   std::string name;
   Vector2f position;
   Vector2f velocity;
   int size;
   bool alive;
+
 };
 #endif

@@ -55,17 +55,30 @@
 
 <playership>
   <file>images/playership.png</file>
-  <startLoc x="718" y="300"/>
-  <frames>4</frames>
   <frameInterval>100</frameInterval>
-  <speedX>200</speedX>
+  <speedX>0</speedX>
   <speedY>0</speedY>
+  <startLoc x="718" y="300"/>
   <transparency>true</transparency>
   <chunk>
     <size>9</size>
     <distance>200</distance>
   </chunk>
 </playership>
+
+<playershipI>
+  <file>images/playershipI.png</file>
+  <startLoc x="718" y="300"/>
+  <frames>4</frames>
+  <frameInterval>100</frameInterval>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
+</playershipI>
 
 <playershipR>
   <file>images/playershipR.png</file>

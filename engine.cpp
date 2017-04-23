@@ -73,7 +73,7 @@ Engine::Engine() :
       int new_y = (int)(((float) j + offset_y) * (height / (float)(no_ty)));
       s->setX(new_x);
       s->setY(new_y);
-      s->setVelocityX(5);
+      s->setVelocityY(5);
       s->setSize(1);
       sprites.push_back(s);
     }
@@ -94,7 +94,7 @@ Engine::Engine() :
       s->setX(new_x);
       s->setY(new_y);
       float speed_mod = 1.0 + dist(mt);
-      s->setVelocityX(10 * speed_mod);
+      s->setVelocityY(10 * speed_mod);
       s->setSize(2);
       sprites.push_back(s);
     }
@@ -111,7 +111,7 @@ Engine::Engine() :
       s->setX(new_x);
       s->setY(new_y);
       float speed_mod = 1.0 + dist(mt);
-      s->setVelocityX(30 * speed_mod);
+      s->setVelocityY(30 * speed_mod);
       s->setSize(3);
       sprites.push_back(s);
     }
@@ -162,9 +162,15 @@ void Engine::checkForCollisions() {
       ++collisions;
       hud.updateCollisions(collisions);
       std::cout << sprites[10]->getName();
-      Drawable* boom = new ExplodingSprite(*static_cast<Sprite*>(player));
+      //Drawable* boom = new ExplodingSprite(*static_cast<Sprite*>(player));
       //player = boom;
-      player = new Player("playership");
+      //delete player;
+      //player = new Player("playership");
+      player->setAlive(false);
+        Drawable* temp = new Sprite("playership");
+        Drawable* explodingSprite = new ExplodingSprite(*static_cast<Sprite*>(temp));
+        player = explodingSprite;
+
     }
     ++it;
   }
