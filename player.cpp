@@ -17,7 +17,7 @@ Player::Player( const std::string& name) :
            Vector2f(Gamedata::getInstance().getXmlInt(name+"/speedX"),
                     Gamedata::getInstance().getXmlInt(name+"/speedY"))
            ),
-  frames( RenderContext::getInstance()->getFrames(name) ),
+  frames( RenderContext::getInstance()->getFrames(name+"I") ),
 	framesRight(RenderContext::getInstance()->getFrames(name+"R")),
 	framesLeft(RenderContext::getInstance()->getFrames(name+"L")),
 	framesTransitionRight(RenderContext::getInstance()->getFrames(name+"TR")),

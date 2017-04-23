@@ -23,6 +23,7 @@ void ExplodingSprite::draw() const {
   // Override draw; use the draw in Chunk, which derives from Sprite.
   // So the draw we're using is actually in Sprite
   for ( Chunk* c : chunks ) {
+    std::cout << "wryyy\n";
     c->draw();
   }
 }

@@ -48,8 +48,9 @@ Engine::Engine() :
   strategy( new PerPixelCollisionStrategy )
 {
   player->setSize(4);
-  sprites.push_back(player);
-  switchSprite();
+  //sprites.push_back(player);
+  //switchSprite();
+  Viewport::getInstance().setObjectToTrack(player);
   sprites.push_back( new Sprite("crystal") );
   sprites[1]->setSize(4);
 
@@ -126,6 +127,7 @@ void Engine::draw() const {
 
   for(auto* s : sprites) s->draw();
   for(auto* b : bullets) b->draw();
+  player->draw();
   if(showHUD) hud.draw();
   viewport.draw();
 
@@ -136,6 +138,7 @@ void Engine::update(Uint32 ticks) {
   for(auto* s : sprites) {
     s->update(ticks);
   }
+  player->update(ticks);
   for(int i = 0; i < (int)bullets.size(); ++i) {
     auto* s = bullets[i];
     if(s->isAlive()) {
@@ -143,6 +146,7 @@ void Engine::update(Uint32 ticks) {
       if(!s->isAlive()) freeBullets.push(i);
     }
   }
+
   hud.updateCounts(bullets.size() - freeBullets.size(), freeBullets.size());
   world.update();
   world2.update();
@@ -151,16 +155,16 @@ void Engine::update(Uint32 ticks) {
 
 void Engine::checkForCollisions() {
   std::vector<Drawable*>::const_iterator it = bullets.begin();
-  //Drawable* player = sprites[0];
   int collisions = 0;
   while ( it != bullets.end() ) {
     if ( strategy->execute(*player, **it) ) {
       //std::cout << "collision: " << ++collisions << std::endl;
       ++collisions;
       hud.updateCollisions(collisions);
-      Drawable* boom = new ExplodingSprite(*static_cast<Sprite*>(sprites[0]));
-          delete player;
-          player = boom;
+      std::cout << sprites[10]->getName();
+      Drawable* boom = new ExplodingSprite(*static_cast<Sprite*>(player));
+      //player = boom;
+      player = new Player("playership");
     }
     ++it;
   }
