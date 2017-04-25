@@ -45,6 +45,11 @@ Engine::Engine() :
   radians(), counter(),
   makeVideo( false ),
   showHUD(true),
+  deathTimer(),
+  invulnTimer(),
+  lives(3),
+  playerAlive(true),
+  playerInvuln(false),
   strategy( new PerPixelCollisionStrategy )
 {
   player->setSize(4);
