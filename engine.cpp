@@ -139,6 +139,26 @@ void Engine::update(Uint32 ticks) {
     s->update(ticks);
   }
   player->update(ticks);
+  if(!playerAlive) {
+    if(deathTimer > 60) {
+      deathTimer = 0;
+      playerAlive = true;
+      player = new Player("playership");
+      Viewport::getInstance().setObjectToTrack(player);
+      player->setAlive(false);
+      invulnTimer = 0;
+      playerInvuln = true;
+    }
+    else ++deathTimer;
+  }
+  else if(playerInvuln) {
+    if(invulnTimer > 90) {
+      invulnTimer = 0;
+      playerInvuln = false;
+      player->setAlive(true);
+    }
+    else ++invulnTimer;
+  }
   for(int i = 0; i < (int)bullets.size(); ++i) {
     auto* s = bullets[i];
     if(s->isAlive()) {
@@ -158,7 +178,7 @@ void Engine::checkForCollisions() {
   std::vector<Drawable*>::const_iterator it = bullets.begin();
   int collisions = 0;
   while ( it != bullets.end() ) {
-    if(!player->isAlive()) break;
+    if(!playerAlive || !player->isAlive()) break;
     if ( strategy->execute(*player, **it) ) {
       //std::cout << "collision: " << ++collisions << std::endl;
       ++collisions;
@@ -174,7 +194,10 @@ void Engine::checkForCollisions() {
         temp->setY(player->getY());
         Drawable* explodingSprite = new ExplodingSprite(*static_cast<Sprite*>(temp));
         player = explodingSprite;
-        player->setAlive(false);
+        Viewport::getInstance().setObjectToTrack(player);
+        playerAlive = false;
+        --lives;
+        deathTimer = 0;
         break;
     }
     ++it;
@@ -279,6 +302,7 @@ void Engine::play() {
       ++counter;
       clock.incrFrame();
       draw();
+
       update(ticks);
       checkForCollisions();
       if ( makeVideo ) {

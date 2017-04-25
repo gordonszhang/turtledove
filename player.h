@@ -16,6 +16,8 @@ public:
     return frames[currentFrame];
   }
 
+  virtual void setAlive(bool a);
+
 protected:
   const std::vector<Frame *> frames;
   const std::vector<Frame *> framesRight;
@@ -37,6 +39,8 @@ protected:
   int state;
   bool movingRight;
 
+  bool isInvulnerable;
+  int offFrame;
   void advanceFrame(Uint32 ticks);
 };
 #endif

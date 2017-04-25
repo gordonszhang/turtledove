@@ -59,12 +59,20 @@ Player::Player(const Player& s) :
 
 void Player::draw() const {
 
-  selectedFrames[currentFrame]->draw(getX(), getY());
+  if(isAlive()) {
+    selectedFrames[currentFrame]->draw(getX(), getY());
+  }
+  else {
+    if(offFrame > 1) {
+      selectedFrames[currentFrame]->draw(getX(), getY());
+    }
+  }
 }
 
 void Player::update(Uint32 ticks) {
   advanceFrame(ticks);
 
+  if(!isAlive()) offFrame = (offFrame + 1) % 4;
   Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
   setPosition(getPosition() + incr);
 
@@ -120,4 +128,9 @@ void Player::update(Uint32 ticks) {
 			--state;
 		}
 	}
+}
+
+void Player::setAlive(bool a) {
+  Drawable::setAlive(a);
+  if(!a) offFrame = 0;
 }

@@ -49,7 +49,7 @@ public:
   void setSize(int s) { size = s; }
 
   bool isAlive() const { return alive; };
-  void setAlive(bool status) { alive = status; };
+  virtual void setAlive(bool status) { alive = status; };
 
   void reset(float vX, float vY) {
     alive = true;

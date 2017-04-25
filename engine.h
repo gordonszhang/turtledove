@@ -38,6 +38,12 @@ private:
   int counter;
   bool makeVideo;
   bool showHUD;
+  int deathTimer;
+  int invulnTimer;
+  int lives;
+  bool playerAlive;
+  bool playerInvuln;
+
   CollisionStrategy* strategy;
 
   void draw() const;
