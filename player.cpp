@@ -97,13 +97,13 @@ void Player::update(Uint32 ticks) {
 			selectedFrames = framesTransitionRight;
 		}
     else if(state == 0) {
-      state = 3;
+      state = 5;
       selectedFrames = framesTurnRight;
     }
-		else if(state > 0 && state < 5) {
+		else if(state > 0 && state < 9) {
 			++state;
 		}
-		else if (state == 5) {
+		else if (state == 9) {
 			selectedFrames = framesRight;
 
 			++state;
@@ -119,13 +119,13 @@ void Player::update(Uint32 ticks) {
 			selectedFrames = framesTransitionLeft;
 		}
     else if(state == 0) {
-      state = -3;
+      state = -5;
       selectedFrames = framesTurnLeft;
     }
-		else if(state < 0 && state > -5) {
+		else if(state < 0 && state > -9) {
 			--state;
 		}
-		else if (state == -5) {
+		else if (state == -9) {
 			selectedFrames = framesLeft;
 			--state;
 		}

@@ -75,11 +75,11 @@ void Barrier::update(Uint32 ticks) {
 
   if(!isAlive()) offFrame = (offFrame + 1) % 4;
 	std::cout << "state: " << state << std::endl;
-	if(state > -1 && state < 5) {
+	if(state > -1 && state < 9) {
 			state++;
 	}
 
-	else if(state >= 5) {
+	else if(state >= 9) {
 		if(lightBarrier) 	selectedFrames = framesLightBarrier;
 		else 							selectedFrames = framesDarkBarrier;
 		state = -1;
@@ -87,6 +87,7 @@ void Barrier::update(Uint32 ticks) {
 }
 
 void Barrier::switchBarrier() {
+	if(state != -1) return;
 	state = 0;
 	if(lightBarrier) 	selectedFrames = framesLightDark;
 	else 							selectedFrames = framesDarkLight;

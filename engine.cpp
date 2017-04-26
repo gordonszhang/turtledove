@@ -352,7 +352,7 @@ void Engine::play() {
         if ( keystate[SDL_SCANCODE_B] ) {
           backSprite();
         }
-				if ( keystate[SDL_SCANCODE_X] ) {
+				if ( keystate[SDL_SCANCODE_X] && playerAlive ) {
           ((Barrier*)barrier)->switchBarrier();
         }
         if (keystate[SDL_SCANCODE_F4] && !makeVideo) {
@@ -373,7 +373,7 @@ void Engine::play() {
         }
       }
 			playerShooting = false;
-			if(keystate[SDL_SCANCODE_Z]) {
+			if(keystate[SDL_SCANCODE_Z] && playerAlive) {
 				playerShooting = true;
 			}
       // Player control
