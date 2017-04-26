@@ -22,26 +22,26 @@ void HUD::draw() const {
 
   std::stringstream ela;
   ela << "Elapsed: " << clock.getSeconds();
-  io.writeText(ela.str(), red, 40, 90);
+  io.writeText(ela.str(), red, 40, 70);
 
   std::stringstream instr;
   instr << "Arrow keys to move";
   SDL_Color white = { 0xff, 0xff, 0xff, 0 };
-  io.writeText(instr.str(), white, 40, 140);
+  io.writeText(instr.str(), white, 40, 100);
 
   std::stringstream a;
-  a << "Alive: " << aliveBullets;
+  a << "Enemy bullets: ";
   SDL_Color blue = { 0, 0, 0xff, 0 };
-  io.writeText(a.str(), blue, 40, 190);
+  io.writeText(a.str(), blue, 40, 130);
 
   std::stringstream f;
-  f << "Free: " << freeBullets;
+  f << "Alive: " << aliveBullets << " Free: " << freeBullets;
   SDL_Color green = { 0, 0xff, 0, 0 };
-  io.writeText(f.str(), green, 40, 240);
+  io.writeText(f.str(), blue, 40, 160);
 
   std::stringstream c;
   c << "Collisions: " << collisions;
-  io.writeText(c.str(), white, 40, 290);
+  io.writeText(c.str(), white, 40, 190);
 }
 
 void HUD::updateCounts(int alive, int free) {

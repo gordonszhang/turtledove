@@ -138,8 +138,11 @@ void Engine::draw() const {
   world.draw();
 
   for(auto* s : sprites) s->draw();
+
 	player->draw();
-  for(auto* b : bullets) b->draw();
+  for(auto* b : bullets) {
+    if(b->isAlive()) b->draw();
+  }
 	for(auto* p : playerBullets) p->draw();
 
   if(showHUD) hud.draw();
@@ -181,6 +184,15 @@ void Engine::update(Uint32 ticks) {
       if(!s->isAlive()) freeBullets.push(i);
     }
   }
+
+  for(int i = 0; i < (int)playerBullets.size(); ++i) {
+    auto* s = playerBullets[i];
+    if(s->isAlive()) {
+      s->update(ticks);
+      if(!s->isAlive()) freePlayerBullets.push(i);
+    }
+  }
+
 	if(playerShooting) {
 		if(shootTimer == 0) {
 			float velX = 0.0;
@@ -212,13 +224,6 @@ void Engine::update(Uint32 ticks) {
 		}
 		shootTimer = (shootTimer + 1) % 4;
 	}
-	for(int i = 0; i < (int)playerBullets.size(); ++i) {
-    auto* s = playerBullets[i];
-    if(s->isAlive()) {
-      s->update(ticks);
-      if(!s->isAlive()) freePlayerBullets.push(i);
-    }
-  }
 
   hud.updateCounts(bullets.size() - freeBullets.size(), freeBullets.size());
   world.update();
@@ -231,7 +236,10 @@ void Engine::checkForCollisions() {
   std::vector<Drawable*>::const_iterator it = bullets.begin();
   int collisions = 0;
   while ( it != bullets.end() ) {
-    if(!(*it)->isAlive()) continue;
+    if(!(*it)->isAlive()) {
+      ++it;
+      continue;
+    }
     if(!playerAlive || !player->isAlive()) break;
     if (strategy->execute(*barrier, **it)) {
       ++collisions;
@@ -241,9 +249,11 @@ void Engine::checkForCollisions() {
       //player = boom;
       //delete player;
       //player = new Player("playership");
-
         (*it)->setAlive(false);
+        int i = it - bullets.begin();
+        freeBullets.push(i);
     }
+
     else if ( strategy->execute(*player, **it) ) {
       //std::cout << "collision: " << ++collisions << std::endl;
       ++collisions;
