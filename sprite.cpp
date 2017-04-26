@@ -15,7 +15,7 @@ Sprite::Sprite(const std::string& name) :
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   frameWidth(frame->getWidth()),
   frameHeight(frame->getHeight()),
-  health(1000)
+  health(2000)
 { }
 
 Sprite::Sprite(const std::string& name, float vX, float vY) :
@@ -29,7 +29,7 @@ Sprite::Sprite(const std::string& name, float vX, float vY) :
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   frameWidth(frame->getWidth()),
   frameHeight(frame->getHeight()),
-  health(1000)
+  health(2000)
 { }
 
 Sprite::Sprite(const Sprite& s) :

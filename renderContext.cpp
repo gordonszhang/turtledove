@@ -1,6 +1,6 @@
 #include "renderContext.h"
 
-RenderContext::RenderContext() : factory(FrameFactory::getInstance()), 
+RenderContext::RenderContext() : factory(FrameFactory::getInstance()),
 	window(nullptr), renderer(nullptr),
 	WIDTH(Gamedata::getInstance().getXmlInt("view/width")),
 	HEIGHT(Gamedata::getInstance().getXmlInt("view/height")) {
@@ -25,7 +25,7 @@ RenderContext* RenderContext::getInstance() {
 }
 
 SDL_Window* RenderContext::initWindow( ) {
-	window = SDL_CreateWindow( "Hello World", SDL_WINDOWPOS_CENTERED,
+	window = SDL_CreateWindow( "Turtledove", SDL_WINDOWPOS_CENTERED,
              SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN );
   if( window == NULL ) {
     throw (std::string("Couldn't make a window: ")+SDL_GetError());

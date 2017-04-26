@@ -6,7 +6,8 @@ HUD::HUD() : rc( RenderContext::getInstance() ),
   aliveBullets(),
   freeBullets(),
   collisions(),
-  bossHealth(1000) {
+  bossHealth(2000),
+  deaths(0) {
 }
 
 void HUD::draw() const {
@@ -16,8 +17,8 @@ void HUD::draw() const {
   SDL_RenderFillRect(rc->getRenderer(), &r);
   SDL_RenderDrawRect(rc->getRenderer(), &r);
 
-  SDL_SetRenderDrawColor(rc->getRenderer(), 255, 0, 0, 100);
-  SDL_Rect healthbar = { 0, 0, (int)(float(bossHealth) / 1000.0 * 854.0), 10};
+  SDL_SetRenderDrawColor(rc->getRenderer(), 255, 50, 50, 200);
+  SDL_Rect healthbar = { 0, 0, (int)(float(bossHealth) / 2000.0 * 854.0), 10};
   SDL_RenderFillRect(rc->getRenderer(), &healthbar);
   SDL_RenderDrawRect(rc->getRenderer(), &healthbar);
 
@@ -33,25 +34,29 @@ void HUD::draw() const {
   std::stringstream instr;
   instr << "Arrow Keys: Move";
   SDL_Color white = { 0xff, 0xff, 0xff, 0 };
-  io.writeText(instr.str(), white, 40, 130);
+  io.writeText(instr.str(), white, 40, 110);
 
   std::stringstream instr2;
   instr2 << "Z: Shoot, X: Shield";
-  io.writeText(instr2.str(), white, 40, 160);
+  io.writeText(instr2.str(), white, 40, 140);
 
   std::stringstream a;
   a << "Enemy bullets: ";
   SDL_Color blue = { 0, 0, 0xff, 0 };
-  io.writeText(a.str(), blue, 40, 220);
+  io.writeText(a.str(), blue, 40, 180);
 
   std::stringstream f;
   f << "Alive: " << aliveBullets << " Free: " << freeBullets;
   SDL_Color green = { 0, 0xff, 0, 0 };
-  io.writeText(f.str(), blue, 40, 250);
+  io.writeText(f.str(), blue, 40, 210);
 
   std::stringstream c;
-  c << "Health: " << bossHealth;
-  io.writeText(c.str(), white, 40, 280);
+  c << "Boss Health: " << bossHealth;
+  io.writeText(c.str(), blue, 40, 250);
+
+  std::stringstream d;
+  d << "Deaths: " << deaths;
+  io.writeText(d.str(), blue, 40, 290);
 }
 
 void HUD::updateCounts(int alive, int free) {
@@ -65,4 +70,8 @@ void HUD::updateCollisions(int c) {
 
 void HUD::updateBoss(int h) {
   bossHealth = h;
+}
+
+void HUD::updateDeaths(int d) {
+  deaths = d;
 }

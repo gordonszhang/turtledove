@@ -198,9 +198,9 @@
   <speedY>0</speedY>
   <transparency>false</transparency>
   <chunk>
-      <size>9</size>
-      <distance>200</distance>
-    </chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
 </tiny_star_1>
 
 <tiny_star_2>
@@ -249,15 +249,11 @@
   <speedX>0</speedX>
   <speedY>0</speedY>
   <transparency>true</transparency>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
 </crystal>
-
-<crystalE>
-  <file>images/crystal.png</file>
-  <startLoc x="726" y="150"/>
-  <speedX>0</speedX>
-  <speedY>0</speedY>
-  <transparency>true</transparency>
-</crystalE>
 
 <bullet>
   <file>images/bullet.png</file>

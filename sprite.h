@@ -21,7 +21,7 @@ public:
   virtual void update(Uint32 ticks);
   void damage() { --health; if(!health) setAlive(false); };
   int getHealth() const { return health; };
-  void resetDamage() { health = 1000; };
+  void resetDamage() { health = 2000; };
 
 private:
   const Frame * frame;

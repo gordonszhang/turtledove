@@ -14,6 +14,7 @@ public:
   void updateCounts(int alive, int free);
   void updateCollisions(int c);
   void updateBoss(int health);
+  void updateDeaths(int deaths);
 private:
   const RenderContext* rc;
   const IOmod& io;
@@ -22,6 +23,7 @@ private:
   int freeBullets;
   int collisions;
   int bossHealth;
+  int deaths;
 };
 
 #endif

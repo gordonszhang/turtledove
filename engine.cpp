@@ -259,7 +259,7 @@ void Engine::checkForCollisions() {
     else if ( strategy->execute(*player, **it) ) {
       //std::cout << "collision: " << ++collisions << std::endl;
       ++collisions;
-      hud.updateCollisions(collisions);
+      hud.updateDeaths(collisions);
       //std::cout << sprites[10]->getName();
       //Drawable* boom = new ExplodingSprite(*static_cast<Sprite*>(player));
       //player = boom;
