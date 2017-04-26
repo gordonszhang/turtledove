@@ -231,8 +231,20 @@ void Engine::checkForCollisions() {
   std::vector<Drawable*>::const_iterator it = bullets.begin();
   int collisions = 0;
   while ( it != bullets.end() ) {
+    if(!(*it)->isAlive()) continue;
     if(!playerAlive || !player->isAlive()) break;
-    if ( strategy->execute(*player, **it) ) {
+    if (strategy->execute(*barrier, **it)) {
+      ++collisions;
+      hud.updateCollisions(collisions);
+      //std::cout << sprites[10]->getName();
+      //Drawable* boom = new ExplodingSprite(*static_cast<Sprite*>(player));
+      //player = boom;
+      //delete player;
+      //player = new Player("playership");
+
+        (*it)->setAlive(false);
+    }
+    else if ( strategy->execute(*player, **it) ) {
       //std::cout << "collision: " << ++collisions << std::endl;
       ++collisions;
       hud.updateCollisions(collisions);
