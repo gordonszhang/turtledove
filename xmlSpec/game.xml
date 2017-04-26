@@ -136,7 +136,7 @@
 </playershipUL>
 
 <barrier>
-  <file>images/barrierL.png</file>
+  <file>images/barrier.png</file>
   <startLoc x="718" y="300"/>
   <frames>4</frames>
   <frameInterval>100</frameInterval>
@@ -256,6 +256,12 @@
     <startLoc x="742" y="166"/>
   <transparency>true</transparency>
 </bullet>
+
+<altbullet>
+  <file>images/altbullet.png</file>
+    <startLoc x="742" y="166"/>
+  <transparency>true</transparency>
+</altbullet>
 
 <playerBullet>
   <file>images/playerBullet.png</file>

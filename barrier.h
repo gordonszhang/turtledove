@@ -18,6 +18,7 @@ public:
 
 	virtual void setAlive(bool a);
 	virtual void switchBarrier();
+  bool isLight() const { return lightBarrier; };
 
 protected:
   const std::vector<Frame *> framesLightBarrier;

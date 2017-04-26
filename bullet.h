@@ -15,13 +15,19 @@ public:
   virtual void draw() const;
   virtual void update(Uint32 ticks);
 
+  void setLight(bool l) { light = l; };
+  bool isLight() const { return light; } ;
+
 private:
   const Frame * frame;
+  const Frame * dark;
   int worldWidth;
   int worldHeight;
   int frameWidth;
   int frameHeight;
-  
+
   int getDistance(const Bullet*) const;
+
+  bool light;
 };
 #endif

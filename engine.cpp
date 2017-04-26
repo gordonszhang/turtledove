@@ -241,7 +241,7 @@ void Engine::checkForCollisions() {
       continue;
     }
     if(!playerAlive || !player->isAlive()) break;
-    if (strategy->execute(*barrier, **it)) {
+    if (strategy->execute(*barrier, **it) && (((Barrier*)barrier)->isLight() == ((Bullet*)(*it))->isLight())) {
       ++collisions;
       hud.updateCollisions(collisions);
       //std::cout << sprites[10]->getName();
@@ -370,16 +370,34 @@ void Engine::play() {
     }
     ticks = clock.getElapsedTicks();
     if ( ticks > 0 ) {
-      if(counter % 16 == 0) {
+      if(counter % 12 == 0) {
       for(int i = 0; i < 8; ++i) {
-        float velX = 100.0 * cos(radians + i * (M_PI / 4.0));
-        float velY = 100.0 * sin(radians + i * (M_PI / 4.0));
+        float velX = 70.0 * cos(radians + i * (M_PI / 4.0));
+        float velY = 70.0 * sin(radians + i * (M_PI / 4.0));
         if(freeBullets.size()) {
           int f = freeBullets.front();
           freeBullets.pop();
           bullets[f]->reset(velX, velY);
+          ((Bullet*)(bullets[f]))->setLight(true);
         }
-        else bullets.push_back( new Bullet("bullet", velX, velY));
+
+        else {
+          Drawable* b = new Bullet("bullet", velX, velY);
+          ((Bullet*)b)->setLight(true);
+          bullets.push_back(b);
+        }
+        if(freeBullets.size()) {
+          int f = freeBullets.front();
+          freeBullets.pop();
+          bullets[f]->reset(velY, velX);
+          ((Bullet*)(bullets[f]))->setLight(false);
+        }
+
+        else {
+          Drawable* b = new Bullet("bullet", velY, velX);
+          ((Bullet*)b)->setLight(false);
+          bullets.push_back(b);
+        }
       }
       radians += M_PI / 32.0;
       }

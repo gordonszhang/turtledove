@@ -11,10 +11,12 @@ Bullet::Bullet(const std::string& name) :
                     Gamedata::getInstance().getXmlInt(name+"/speedY"))
            ),
   frame( RenderContext::getInstance()->getFrame(name) ),
+  dark(RenderContext::getInstance()->getFrame("alt"+name)),
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   frameWidth(frame->getWidth()),
-  frameHeight(frame->getHeight())
+  frameHeight(frame->getHeight()),
+  light()
 { }
 
 Bullet::Bullet(const std::string& name, float vX, float vY) :
@@ -24,34 +26,41 @@ Bullet::Bullet(const std::string& name, float vX, float vY) :
            Vector2f(vX, vY)
            ),
   frame( RenderContext::getInstance()->getFrame(name) ),
+  dark(RenderContext::getInstance()->getFrame("alt"+name)),
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   frameWidth(frame->getWidth()),
-  frameHeight(frame->getHeight())
+  frameHeight(frame->getHeight()),
+  light()
 { }
 
 Bullet::Bullet(const Bullet& s) :
   Drawable(s),
   frame(s.frame),
+  dark(s.dark),
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   frameWidth(s.getFrame()->getWidth()),
-  frameHeight(s.getFrame()->getHeight())
+  frameHeight(s.getFrame()->getHeight()),
+  light(s.light)
 { }
 
 Bullet& Bullet::operator=(const Bullet& rhs) {
   if(this == &rhs) return *this;
   Drawable::operator=( rhs );
   frame = rhs.frame;
+  dark = rhs.dark;
   worldWidth = rhs.worldWidth;
   worldHeight = rhs.worldHeight;
   frameWidth = rhs.frameWidth;
   frameHeight = rhs.frameHeight;
+  light = rhs.light;
   return *this;
 }
 
 void Bullet::draw() const {
-  frame->draw(getX(), getY());
+  if(light)frame->draw(getX(), getY());
+  else dark->draw(getX(),getY());
 }
 
 void Bullet::update(Uint32 ticks) {
