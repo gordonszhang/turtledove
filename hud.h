@@ -13,6 +13,7 @@ public:
   HUD();
   void updateCounts(int alive, int free);
   void updateCollisions(int c);
+  void updateBoss(int health);
 private:
   const RenderContext* rc;
   const IOmod& io;
@@ -20,6 +21,7 @@ private:
   int aliveBullets;
   int freeBullets;
   int collisions;
+  int bossHealth;
 };
 
 #endif

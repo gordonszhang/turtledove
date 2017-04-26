@@ -5,7 +5,8 @@ HUD::HUD() : rc( RenderContext::getInstance() ),
   clock( Clock::getInstance() ),
   aliveBullets(),
   freeBullets(),
-  collisions() {
+  collisions(),
+  bossHealth(1000) {
 }
 
 void HUD::draw() const {
@@ -14,6 +15,11 @@ void HUD::draw() const {
   SDL_Rect r = { 30, 30, 250, 300 };
   SDL_RenderFillRect(rc->getRenderer(), &r);
   SDL_RenderDrawRect(rc->getRenderer(), &r);
+
+  SDL_SetRenderDrawColor(rc->getRenderer(), 255, 0, 0, 100);
+  SDL_Rect healthbar = { 0, 0, (int)(float(bossHealth) / 1000.0 * 854.0), 10};
+  SDL_RenderFillRect(rc->getRenderer(), &healthbar);
+  SDL_RenderDrawRect(rc->getRenderer(), &healthbar);
 
   std::stringstream fps;
   fps << "FPS: " << clock.getAvgFps();
@@ -44,8 +50,8 @@ void HUD::draw() const {
   io.writeText(f.str(), blue, 40, 250);
 
   std::stringstream c;
-  c << "Collisions: " << collisions;
-  //io.writeText(c.str(), white, 40, 280);
+  c << "Health: " << bossHealth;
+  io.writeText(c.str(), white, 40, 280);
 }
 
 void HUD::updateCounts(int alive, int free) {
@@ -55,4 +61,8 @@ void HUD::updateCounts(int alive, int free) {
 
 void HUD::updateCollisions(int c) {
   collisions = c;
+}
+
+void HUD::updateBoss(int h) {
+  bossHealth = h;
 }

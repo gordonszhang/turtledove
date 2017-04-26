@@ -45,6 +45,7 @@ Engine::Engine() :
   freeEnemies(),
   player(new Player("playership")),
 	barrier(new Barrier("barrier")),
+  boss(new Sprite("crystal")),
   currentSprite(-1),
   radians(), counter(),
   makeVideo( false ),
@@ -56,6 +57,7 @@ Engine::Engine() :
   playerAlive(true),
   playerInvuln(false),
 	playerShooting(false),
+  bossAlive(true),
   strategy( new PerPixelCollisionStrategy )
 {
   player->setSize(4);
@@ -63,8 +65,7 @@ Engine::Engine() :
   //sprites.push_back(player);
   //switchSprite();
   Viewport::getInstance().setObjectToTrack(player);
-  sprites.push_back( new Sprite("crystal") );
-  sprites[0]->setSize(4);
+  boss->setSize(4);
 
   std::random_device rd;
   std::mt19937 mt(rd());
@@ -138,7 +139,7 @@ void Engine::draw() const {
   world.draw();
 
   for(auto* s : sprites) s->draw();
-
+  boss->draw();
 	player->draw();
   for(auto* b : bullets) {
     if(b->isAlive()) b->draw();
@@ -156,6 +157,7 @@ void Engine::update(Uint32 ticks) {
     s->update(ticks);
   }
   player->update(ticks);
+  boss->update(ticks);
   if(!playerAlive) {
     if(deathTimer > 60) {
       deathTimer = 0;
@@ -278,6 +280,35 @@ void Engine::checkForCollisions() {
     }
     ++it;
   }
+  it = playerBullets.begin();
+  while ( it != playerBullets.end() ) {
+    if(!(*it)->isAlive()) {
+      ++it;
+      continue;
+    }
+    if(!bossAlive || !boss->isAlive()) break;
+    if ( strategy->execute(*boss, **it) ) {
+      //std::cout << "collision: " << ++collisions << std::endl;
+      ((Sprite*)boss)->damage();
+      hud.updateBoss(((Sprite*)boss)->getHealth());
+      if(!boss->isAlive()) {
+      //std::cout << sprites[10]->getName();
+      //Drawable* boom = new ExplodingSprite(*static_cast<Sprite*>(player));
+      //player = boom;
+      //delete player;
+      //player = new Player("playership");
+
+        Drawable* temp = new Sprite("crystal");
+        temp->setX(boss->getX());
+        temp->setY(boss->getY());
+        Drawable* explodingSprite = new ExplodingSprite(*static_cast<Sprite*>(temp));
+        boss = explodingSprite;
+        bossAlive = false;
+        break;
+      }
+    }
+    ++it;
+  }
 }
 
 void Engine::switchSprite(){
@@ -370,36 +401,38 @@ void Engine::play() {
     }
     ticks = clock.getElapsedTicks();
     if ( ticks > 0 ) {
-      if(counter % 12 == 0) {
-      for(int i = 0; i < 8; ++i) {
-        float velX = 70.0 * cos(radians + i * (M_PI / 4.0));
-        float velY = 70.0 * sin(radians + i * (M_PI / 4.0));
-        if(freeBullets.size()) {
-          int f = freeBullets.front();
-          freeBullets.pop();
-          bullets[f]->reset(velX, velY);
-          ((Bullet*)(bullets[f]))->setLight(true);
-        }
+      if(bossAlive) {
+        if(counter % 12 == 0) {
+        for(int i = 0; i < 8; ++i) {
+          float velX = 70.0 * cos(radians + i * (M_PI / 4.0));
+          float velY = 70.0 * sin(radians + i * (M_PI / 4.0));
+          if(freeBullets.size()) {
+            int f = freeBullets.front();
+            freeBullets.pop();
+            bullets[f]->reset(velX, velY);
+            ((Bullet*)(bullets[f]))->setLight(true);
+          }
 
-        else {
-          Drawable* b = new Bullet("bullet", velX, velY);
-          ((Bullet*)b)->setLight(true);
-          bullets.push_back(b);
-        }
-        if(freeBullets.size()) {
-          int f = freeBullets.front();
-          freeBullets.pop();
-          bullets[f]->reset(velY, velX);
-          ((Bullet*)(bullets[f]))->setLight(false);
-        }
+          else {
+            Drawable* b = new Bullet("bullet", velX, velY);
+            ((Bullet*)b)->setLight(true);
+            bullets.push_back(b);
+          }
+          if(freeBullets.size()) {
+            int f = freeBullets.front();
+            freeBullets.pop();
+            bullets[f]->reset(velY, velX);
+            ((Bullet*)(bullets[f]))->setLight(false);
+          }
 
-        else {
-          Drawable* b = new Bullet("bullet", velY, velX);
-          ((Bullet*)b)->setLight(false);
-          bullets.push_back(b);
+          else {
+            Drawable* b = new Bullet("bullet", velY, velX);
+            ((Bullet*)b)->setLight(false);
+            bullets.push_back(b);
+          }
         }
-      }
-      radians += M_PI / 32.0;
+        radians += M_PI / 32.0;
+        }
       }
       ++counter;
       clock.incrFrame();

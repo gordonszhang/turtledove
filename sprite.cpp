@@ -14,7 +14,8 @@ Sprite::Sprite(const std::string& name) :
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   frameWidth(frame->getWidth()),
-  frameHeight(frame->getHeight())
+  frameHeight(frame->getHeight()),
+  health(1000)
 { }
 
 Sprite::Sprite(const std::string& name, float vX, float vY) :
@@ -27,7 +28,8 @@ Sprite::Sprite(const std::string& name, float vX, float vY) :
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   frameWidth(frame->getWidth()),
-  frameHeight(frame->getHeight())
+  frameHeight(frame->getHeight()),
+  health(1000)
 { }
 
 Sprite::Sprite(const Sprite& s) :
@@ -36,7 +38,8 @@ Sprite::Sprite(const Sprite& s) :
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   frameWidth(s.getFrame()->getWidth()),
-  frameHeight(s.getFrame()->getHeight())
+  frameHeight(s.getFrame()->getHeight()),
+  health(s.health)
 { }
 
 Sprite& Sprite::operator=(const Sprite& rhs) {
@@ -47,6 +50,7 @@ Sprite& Sprite::operator=(const Sprite& rhs) {
   worldHeight = rhs.worldHeight;
   frameWidth = rhs.frameWidth;
   frameHeight = rhs.frameHeight;
+  health = rhs.health;
   return *this;
 }
 

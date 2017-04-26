@@ -16,9 +16,12 @@ public:
   Sprite& operator=(const Sprite&);
 
   virtual const Frame* getFrame() const { return frame; }
-  virtual void setFrame(Frame* f) { frame = f; }; 
+  virtual void setFrame(Frame* f) { frame = f; };
   virtual void draw() const;
   virtual void update(Uint32 ticks);
+  void damage() { --health; if(!health) setAlive(false); };
+  int getHealth() const { return health; };
+  void resetDamage() { health = 1000; };
 
 private:
   const Frame * frame;
@@ -27,5 +30,6 @@ private:
   int frameWidth;
   int frameHeight;
   int getDistance(const Sprite*) const;
+  int health;
 };
 #endif

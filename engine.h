@@ -35,6 +35,7 @@ private:
   std::queue<int> freeEnemies;
   Drawable* player;
 	Drawable* barrier;
+  Drawable* boss;
 
   int currentSprite;
   float radians;
@@ -48,6 +49,7 @@ private:
   bool playerAlive;
   bool playerInvuln;
 	bool playerShooting;
+  bool bossAlive;
 
   CollisionStrategy* strategy;
 

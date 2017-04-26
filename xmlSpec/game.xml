@@ -251,6 +251,14 @@
   <transparency>true</transparency>
 </crystal>
 
+<crystalE>
+  <file>images/crystal.png</file>
+  <startLoc x="726" y="150"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</crystalE>
+
 <bullet>
   <file>images/bullet.png</file>
     <startLoc x="742" y="166"/>
@@ -268,6 +276,12 @@
     <startLoc x="742" y="166"/>
   <transparency>true</transparency>
 </playerBullet>
+
+<altplayerBullet>
+  <file>images/playerBullet.png</file>
+    <startLoc x="742" y="166"/>
+  <transparency>true</transparency>
+</altplayerBullet>
 
 <greenorb>
   <file>images/greenball.bmp</file>
