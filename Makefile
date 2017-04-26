@@ -20,6 +20,7 @@ OBJS = \
 	explodingSprite.o \
 	bullet.o \
 	player.o \
+	barrier.o \
 	vector2f.o \
 	clock.o \
 	engine.o \

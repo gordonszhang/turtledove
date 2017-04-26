@@ -10,6 +10,7 @@
 #include "gamedata.h"
 #include "engine.h"
 #include "frameGenerator.h"
+#include "barrier.h"
 
 class DrawComp {
 public:
@@ -38,21 +39,27 @@ Engine::Engine() :
   sprites(),
   bullets(),
   enemies(),
+	playerBullets(),
   freeBullets(),
+	freePlayerBullets(),
   freeEnemies(),
   player(new Player("playership")),
+	barrier(new Barrier("barrier")),
   currentSprite(-1),
   radians(), counter(),
   makeVideo( false ),
   showHUD(true),
   deathTimer(),
   invulnTimer(),
+	shootTimer(),
   lives(3),
   playerAlive(true),
   playerInvuln(false),
+	playerShooting(false),
   strategy( new PerPixelCollisionStrategy )
 {
   player->setSize(4);
+	((Player*)player)->attachBarrier(barrier);
   //sprites.push_back(player);
   //switchSprite();
   Viewport::getInstance().setObjectToTrack(player);
@@ -131,8 +138,10 @@ void Engine::draw() const {
   world.draw();
 
   for(auto* s : sprites) s->draw();
+	player->draw();
   for(auto* b : bullets) b->draw();
-  player->draw();
+	for(auto* p : playerBullets) p->draw();
+
   if(showHUD) hud.draw();
   viewport.draw();
 
@@ -149,6 +158,7 @@ void Engine::update(Uint32 ticks) {
       deathTimer = 0;
       playerAlive = true;
       player = new Player("playership");
+			((Player*)player)->attachBarrier(barrier);
       Viewport::getInstance().setObjectToTrack(player);
       player->setAlive(false);
       invulnTimer = 0;
@@ -169,6 +179,44 @@ void Engine::update(Uint32 ticks) {
     if(s->isAlive()) {
       s->update(ticks);
       if(!s->isAlive()) freeBullets.push(i);
+    }
+  }
+	if(playerShooting) {
+		if(shootTimer == 0) {
+			float velX = 0.0;
+			float velY = -400.0;
+			if(freePlayerBullets.size() > 1) {
+				int f = freePlayerBullets.front();
+				freePlayerBullets.pop();
+				playerBullets[f]->reset(velX, velY);
+				playerBullets[f]->setX(player->getX()+12);
+				playerBullets[f]->setY(player->getY()+12);
+
+				int f2 = freePlayerBullets.front();
+				freePlayerBullets.pop();
+				playerBullets[f2]->reset(velX, velY);
+				playerBullets[f2]->setX(player->getX()+36);
+				playerBullets[f2]->setY(player->getY()+12);
+			}
+			else {
+				Drawable* b = new Bullet("playerBullet", velX, velY);
+				b->setX(player->getX()+12);
+				b->setY(player->getY()+12);
+				playerBullets.push_back(b);
+
+				Drawable* b2 = new Bullet("playerBullet", velX, velY);
+				b2->setX(player->getX() + 36);
+				b2->setY(player->getY() + 12);
+				playerBullets.push_back(b2);
+			}
+		}
+		shootTimer = (shootTimer + 1) % 4;
+	}
+	for(int i = 0; i < (int)playerBullets.size(); ++i) {
+    auto* s = playerBullets[i];
+    if(s->isAlive()) {
+      s->update(ticks);
+      if(!s->isAlive()) freePlayerBullets.push(i);
     }
   }
 
@@ -195,6 +243,7 @@ void Engine::checkForCollisions() {
       //player = new Player("playership");
 
         Drawable* temp = new Sprite("playershipE");
+				((Player*)player)->detachBarrier();
         temp->setX(player->getX());
         temp->setY(player->getY());
         Drawable* explodingSprite = new ExplodingSprite(*static_cast<Sprite*>(temp));
@@ -250,6 +299,9 @@ void Engine::play() {
         if ( keystate[SDL_SCANCODE_B] ) {
           backSprite();
         }
+				if ( keystate[SDL_SCANCODE_X] ) {
+          ((Barrier*)barrier)->switchBarrier();
+        }
         if (keystate[SDL_SCANCODE_F4] && !makeVideo) {
           std::cout << "Initiating frame capture" << std::endl;
           makeVideo = true;
@@ -267,6 +319,10 @@ void Engine::play() {
           showHUD = false;
         }
       }
+			playerShooting = false;
+			if(keystate[SDL_SCANCODE_Z]) {
+				playerShooting = true;
+			}
       // Player control
       player->setVelocityX(0);
       player->setVelocityY(0);
@@ -288,6 +344,7 @@ void Engine::play() {
       else if ( keystate[SDL_SCANCODE_DOWN] ) {
         player->setVelocityY(player->getVelocityY() + 200);
       }
+
     }
     ticks = clock.getElapsedTicks();
     if ( ticks > 0 ) {

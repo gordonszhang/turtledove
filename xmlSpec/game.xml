@@ -135,6 +135,48 @@
   <transparency>true</transparency>
 </playershipUL>
 
+<barrierL>
+  <file>images/barrierL.png</file>
+  <startLoc x="718" y="300"/>
+  <frames>4</frames>
+  <frameInterval>100</frameInterval>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
+</barrierL>
+
+<barrierD>
+  <file>images/barrierD.png</file>
+  <startLoc x="718" y="300"/>
+  <frames>4</frames>
+  <frameInterval>100</frameInterval>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
+</barrierD>
+
+<barrierDL>
+  <file>images/barrierDL.png</file>
+  <frames>4</frames>
+  <frameInterval>100</frameInterval>
+  <transparency>true</transparency>
+</barrierDL>
+
+<barrierLD>
+  <file>images/barrierLD.png</file>
+  <frames>4</frames>
+  <frameInterval>100</frameInterval>
+  <transparency>true</transparency>
+</barrierLD>
+
 <tiny_star_1>
   <file>images/tiny_star_1.png</file>
   <startLoc x="0" y="0"/>
@@ -200,6 +242,12 @@
     <startLoc x="742" y="166"/>
   <transparency>true</transparency>
 </bullet>
+
+<playerBullet>
+  <file>images/playerBullet.png</file>
+    <startLoc x="742" y="166"/>
+  <transparency>true</transparency>
+</playerBullet>
 
 <greenorb>
   <file>images/greenball.bmp</file>

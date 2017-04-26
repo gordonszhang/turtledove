@@ -1,9 +1,10 @@
-#ifndef MULTISPRITE__H
-#define MULTISPRITE__H
+#ifndef PLAYER__H
+#define PLAYER__H
 #include <string>
 #include <vector>
 #include <cmath>
 #include "drawable.h"
+#include "barrier.h"
 
 class Player : public Drawable {
 public:
@@ -18,6 +19,9 @@ public:
 
   virtual void setAlive(bool a);
 
+	void attachBarrier(Drawable* b);
+	void detachBarrier();
+
 protected:
   const std::vector<Frame *> frames;
   const std::vector<Frame *> framesRight;
@@ -27,6 +31,7 @@ protected:
   const std::vector<Frame *> framesTurnRight;
   const std::vector<Frame *> framesTurnLeft;
   std::vector<Frame *> selectedFrames;
+	std::vector<Barrier *> barrier;
 
   unsigned currentFrame;
   unsigned numberOfFrames;

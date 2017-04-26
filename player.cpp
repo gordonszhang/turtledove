@@ -25,6 +25,7 @@ Player::Player( const std::string& name) :
   framesTurnRight(RenderContext::getInstance()->getFrames(name+"UR")),
 	framesTurnLeft(RenderContext::getInstance()->getFrames(name+"UL")),
 	selectedFrames(frames),
+	barrier(),
   currentFrame(0),
   numberOfFrames( Gamedata::getInstance().getXmlInt(name+"I/frames") ),
   frameInterval( Gamedata::getInstance().getXmlInt(name+"I/frameInterval")),
@@ -46,6 +47,7 @@ Player::Player(const Player& s) :
   framesTurnRight(s.framesTurnRight),
 	framesTurnLeft(s.framesTurnLeft),
 	selectedFrames(s.selectedFrames),
+	barrier(s.barrier),
   currentFrame(s.currentFrame),
   numberOfFrames( s.numberOfFrames ),
   frameInterval( s.frameInterval ),
@@ -58,7 +60,7 @@ Player::Player(const Player& s) :
   { }
 
 void Player::draw() const {
-
+	barrier[0]->draw();
   if(isAlive()) {
     selectedFrames[currentFrame]->draw(getX(), getY());
   }
@@ -128,9 +130,23 @@ void Player::update(Uint32 ticks) {
 			--state;
 		}
 	}
+	barrier[0]->setX(getX());
+	barrier[0]->setY(getY());
+	barrier[0]->setVelocityX(getVelocityX());
+	barrier[0]->setVelocityY(getVelocityY());
+	barrier[0]->update(ticks);
+}
+
+void Player::attachBarrier(Drawable *b) {
+	barrier.push_back((Barrier*)b);
+}
+
+void Player::detachBarrier() {
+	barrier.pop_back();
 }
 
 void Player::setAlive(bool a) {
   Drawable::setAlive(a);
+	barrier[0]->setAlive(a);
   if(!a) offFrame = 0;
 }

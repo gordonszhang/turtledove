@@ -29,9 +29,12 @@ private:
   std::vector<Drawable*> sprites;
   std::vector<Drawable*> bullets;
   std::vector<Drawable*> enemies;
+	std::vector<Drawable*> playerBullets;
   std::queue<int> freeBullets;
+	std::queue<int> freePlayerBullets;
   std::queue<int> freeEnemies;
   Drawable* player;
+	Drawable* barrier;
 
   int currentSprite;
   float radians;
@@ -40,9 +43,11 @@ private:
   bool showHUD;
   int deathTimer;
   int invulnTimer;
+	int shootTimer;
   int lives;
   bool playerAlive;
   bool playerInvuln;
+	bool playerShooting;
 
   CollisionStrategy* strategy;
 
