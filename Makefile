@@ -24,6 +24,7 @@ OBJS = \
 	vector2f.o \
 	clock.o \
 	engine.o \
+	level.o \
 	hud.o \
 	collisionStrategy.o \
 	chunk.o \
