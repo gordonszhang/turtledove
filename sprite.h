@@ -22,6 +22,7 @@ public:
   void damage() { --health; if(!health) setAlive(false); };
   int getHealth() const { return health; };
   void resetDamage() { health = 2000; };
+  void updatePlayerPos(Vector2f pos) { playerPos = pos; };
 
 private:
   const Frame * frame;
@@ -31,5 +32,6 @@ private:
   int frameHeight;
   int getDistance(const Sprite*) const;
   int health;
+  Vector2f playerPos;
 };
 #endif

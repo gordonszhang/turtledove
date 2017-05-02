@@ -6,6 +6,7 @@
 #include <random>
 #include <algorithm>
 #include "sprite.h"
+#include "star.h"
 #include "player.h"
 #include "gamedata.h"
 #include "engine.h"
@@ -53,7 +54,7 @@ Engine::Engine() :
   deathTimer(),
   invulnTimer(),
 	shootTimer(),
-  lives(3),
+  lives(),
   playerAlive(true),
   playerInvuln(false),
 	playerShooting(false),
@@ -62,6 +63,7 @@ Engine::Engine() :
 {
   player->setSize(4);
 	((Player*)player)->attachBarrier(barrier);
+  ((Player*)player)->attachEnemy(boss);
   //sprites.push_back(player);
   //switchSprite();
   Viewport::getInstance().setObjectToTrack(player);
@@ -78,8 +80,8 @@ Engine::Engine() :
     for(unsigned int j = 0; j < no_ty; ++j) {
       float color = dist(mt);
       Drawable* s;
-      if(color > 0.5) s = new Sprite("tiny_star_1");
-      else  s = new Sprite("tiny_star_2");
+      if(color > 0.5) s = new Star("tiny_star_1");
+      else  s = new Star("tiny_star_2");
       float offset_x = dist(mt);
       float offset_y = dist(mt);
       int new_x = (int)(((float) i + offset_x) * (width / (float)(no_ty)));
@@ -97,9 +99,9 @@ Engine::Engine() :
     for(unsigned int j = 0; j < no_sm; ++j) {
       float color = dist(mt);
       Drawable* s;
-      if(color < 0.3) s = new Sprite("small_star_1");
-      else if(color < 0.6) s = new Sprite("small_star_2");
-      else s = new Sprite("small_star_3");
+      if(color < 0.3) s = new Star("small_star_1");
+      else if(color < 0.6) s = new Star("small_star_2");
+      else s = new Star("small_star_3");
       float offset_x = dist(mt);
       float offset_y = dist(mt);
       int new_x = (int)(((float) i + offset_x) * (width / (float)(no_sm)));
@@ -116,7 +118,7 @@ Engine::Engine() :
   unsigned int no_big = 10;
   for(unsigned int i = 0; i < no_big; ++i) {
     for(unsigned int j = 0; j < no_big; ++j) {
-      auto* s = new Sprite("big_star");
+      auto* s = new Star("big_star");
       float offset_x = dist(mt);
       float offset_y = dist(mt);
       int new_x = (int)(((float) i + offset_x) * (width / (float)(no_big)));
@@ -258,8 +260,7 @@ void Engine::checkForCollisions() {
 
     else if ( strategy->execute(*player, **it) ) {
       //std::cout << "collision: " << ++collisions << std::endl;
-      ++collisions;
-      hud.updateDeaths(collisions);
+      hud.updateDeaths(++lives);
       //std::cout << sprites[10]->getName();
       //Drawable* boom = new ExplodingSprite(*static_cast<Sprite*>(player));
       //player = boom;
@@ -274,7 +275,6 @@ void Engine::checkForCollisions() {
         player = explodingSprite;
         Viewport::getInstance().setObjectToTrack(player);
         playerAlive = false;
-        --lives;
         deathTimer = 0;
         break;
     }
@@ -402,7 +402,7 @@ void Engine::play() {
     ticks = clock.getElapsedTicks();
     if ( ticks > 0 ) {
       if(bossAlive) {
-        if(counter % 12 == 0) {
+        if(counter % 24 == 0) {
         for(int i = 0; i < 8; ++i) {
           float velX = 70.0 * cos(radians + i * (M_PI / 4.0));
           float velY = 70.0 * sin(radians + i * (M_PI / 4.0));
@@ -411,11 +411,13 @@ void Engine::play() {
             freeBullets.pop();
             bullets[f]->reset(velX, velY);
             ((Bullet*)(bullets[f]))->setLight(true);
+            bullets[f]->setPosition(boss->getPosition());
           }
 
           else {
             Drawable* b = new Bullet("bullet", velX, velY);
             ((Bullet*)b)->setLight(true);
+            b->setPosition(boss->getPosition());
             bullets.push_back(b);
           }
           if(freeBullets.size()) {
@@ -423,11 +425,13 @@ void Engine::play() {
             freeBullets.pop();
             bullets[f]->reset(velY, velX);
             ((Bullet*)(bullets[f]))->setLight(false);
+            bullets[f]->setPosition(boss->getPosition());
           }
 
           else {
             Drawable* b = new Bullet("bullet", velY, velX);
             ((Bullet*)b)->setLight(false);
+            b->setPosition(boss->getPosition());
             bullets.push_back(b);
           }
         }

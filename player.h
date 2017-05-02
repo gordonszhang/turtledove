@@ -5,6 +5,7 @@
 #include <cmath>
 #include "drawable.h"
 #include "barrier.h"
+#include "sprite.h"
 
 class Player : public Drawable {
 public:
@@ -22,6 +23,9 @@ public:
 	void attachBarrier(Drawable* b);
 	void detachBarrier();
 
+  void attachEnemy(Drawable* b);
+  void detachEnemy();
+
 protected:
   const std::vector<Frame *> frames;
   const std::vector<Frame *> framesRight;
@@ -32,6 +36,7 @@ protected:
   const std::vector<Frame *> framesTurnLeft;
   std::vector<Frame *> selectedFrames;
 	std::vector<Barrier *> barrier;
+  std::vector<Sprite *> enemy;
 
   unsigned currentFrame;
   unsigned numberOfFrames;

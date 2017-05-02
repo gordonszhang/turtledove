@@ -17,6 +17,7 @@ OBJS = \
 	frameFactory.o \
 	frameGenerator.o \
 	sprite.o \
+	star.o \
 	explodingSprite.o \
 	bullet.o \
 	player.o \
