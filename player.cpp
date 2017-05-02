@@ -135,7 +135,7 @@ void Player::update(Uint32 ticks) {
 	barrier[0]->setVelocityX(getVelocityX());
 	barrier[0]->setVelocityY(getVelocityY());
 	barrier[0]->update(ticks);
-  //enemy[0]->updatePlayerPos(getPosition());
+  enemy[0]->updatePlayerPos(getPosition());
 }
 
 void Player::attachBarrier(Drawable *b) {

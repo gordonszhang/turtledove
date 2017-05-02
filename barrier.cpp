@@ -74,7 +74,7 @@ void Barrier::update(Uint32 ticks) {
   advanceFrame(ticks);
 
   if(!isAlive()) offFrame = (offFrame + 1) % 4;
-	std::cout << "state: " << state << std::endl;
+	//std::cout << "state: " << state << std::endl;
 	if(state > -1 && state < 9) {
 			state++;
 	}

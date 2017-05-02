@@ -1,5 +1,5 @@
 #include <cmath>
-#include "Star.h"
+#include "star.h"
 #include "gamedata.h"
 #include "renderContext.h"
 

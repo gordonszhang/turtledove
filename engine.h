@@ -48,6 +48,7 @@ private:
   int lives;
   bool playerAlive;
   bool playerInvuln;
+  bool godmode;
 	bool playerShooting;
   bool bossAlive;
 

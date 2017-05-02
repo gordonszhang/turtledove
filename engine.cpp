@@ -13,6 +13,8 @@
 #include "frameGenerator.h"
 #include "barrier.h"
 
+extern bool restart;
+
 class DrawComp {
 public:
   bool operator()(const Drawable *lhs, const Drawable* rhs) const {
@@ -57,6 +59,7 @@ Engine::Engine() :
   lives(),
   playerAlive(true),
   playerInvuln(false),
+  godmode(false),
 	playerShooting(false),
   bossAlive(true),
   strategy( new PerPixelCollisionStrategy )
@@ -146,7 +149,9 @@ void Engine::draw() const {
   for(auto* b : bullets) {
     if(b->isAlive()) b->draw();
   }
-	for(auto* p : playerBullets) p->draw();
+	for(auto* p : playerBullets) {
+    if(p->isAlive()) p->draw();
+  }
 
   if(showHUD) hud.draw();
   viewport.draw();
@@ -166,6 +171,7 @@ void Engine::update(Uint32 ticks) {
       playerAlive = true;
       player = new Player("playership");
 			((Player*)player)->attachBarrier(barrier);
+      ((Player*)player)->attachEnemy(boss);
       Viewport::getInstance().setObjectToTrack(player);
       player->setAlive(false);
       invulnTimer = 0;
@@ -174,7 +180,7 @@ void Engine::update(Uint32 ticks) {
     else ++deathTimer;
   }
   else if(playerInvuln) {
-    if(invulnTimer > 90) {
+    if(!godmode && invulnTimer > 90) {
       invulnTimer = 0;
       playerInvuln = false;
       player->setAlive(true);
@@ -269,6 +275,7 @@ void Engine::checkForCollisions() {
 
         Drawable* temp = new Sprite("playershipE");
 				((Player*)player)->detachBarrier();
+        ((Player*)player)->detachEnemy();
         temp->setX(player->getX());
         temp->setY(player->getY());
         Drawable* explodingSprite = new ExplodingSprite(*static_cast<Sprite*>(temp));
@@ -291,6 +298,9 @@ void Engine::checkForCollisions() {
       //std::cout << "collision: " << ++collisions << std::endl;
       ((Sprite*)boss)->damage();
       hud.updateBoss(((Sprite*)boss)->getHealth());
+      (*it)->setAlive(false);
+      int i = it - playerBullets.begin();
+      freePlayerBullets.push(i);
       if(!boss->isAlive()) {
       //std::cout << sprites[10]->getName();
       //Drawable* boom = new ExplodingSprite(*static_cast<Sprite*>(player));
@@ -346,11 +356,19 @@ void Engine::play() {
         if ( keystate[SDL_SCANCODE_S] ) {
           clock.toggleSloMo();
         }
-        if ( keystate[SDL_SCANCODE_T] ) {
-          switchSprite();
+        if ( keystate[SDL_SCANCODE_R] ) {
+          restart = true;
+          return;
         }
-        if ( keystate[SDL_SCANCODE_B] ) {
-          backSprite();
+        if ( keystate[SDL_SCANCODE_G] ) {
+          if(!godmode) {
+            playerInvuln = true;
+            player->setAlive(false);
+            godmode = true;
+          }
+          else {
+            godmode = false;
+          }
         }
 				if ( keystate[SDL_SCANCODE_X] && playerAlive ) {
           ((Barrier*)barrier)->switchBarrier();
@@ -404,20 +422,20 @@ void Engine::play() {
       if(bossAlive) {
         if(counter % 24 == 0) {
         for(int i = 0; i < 8; ++i) {
-          float velX = 70.0 * cos(radians + i * (M_PI / 4.0));
-          float velY = 70.0 * sin(radians + i * (M_PI / 4.0));
+          float velX = 100.0 * cos(radians + i * (M_PI / 4.0));
+          float velY = 100.0 * sin(radians + i * (M_PI / 4.0));
           if(freeBullets.size()) {
             int f = freeBullets.front();
             freeBullets.pop();
             bullets[f]->reset(velX, velY);
             ((Bullet*)(bullets[f]))->setLight(true);
-            bullets[f]->setPosition(boss->getPosition());
+            bullets[f]->setPosition(boss->getPosition() + Vector2f(16, 16));
           }
 
           else {
             Drawable* b = new Bullet("bullet", velX, velY);
             ((Bullet*)b)->setLight(true);
-            b->setPosition(boss->getPosition());
+            b->setPosition(boss->getPosition() + Vector2f(16, 16));
             bullets.push_back(b);
           }
           if(freeBullets.size()) {
@@ -425,13 +443,13 @@ void Engine::play() {
             freeBullets.pop();
             bullets[f]->reset(velY, velX);
             ((Bullet*)(bullets[f]))->setLight(false);
-            bullets[f]->setPosition(boss->getPosition());
+            bullets[f]->setPosition(boss->getPosition() + Vector2f(16, 16));
           }
 
           else {
             Drawable* b = new Bullet("bullet", velY, velX);
             ((Bullet*)b)->setLight(false);
-            b->setPosition(boss->getPosition());
+            b->setPosition(boss->getPosition() + Vector2f(16, 16));
             bullets.push_back(b);
           }
         }

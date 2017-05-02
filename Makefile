@@ -29,6 +29,7 @@ OBJS = \
 	hud.o \
 	collisionStrategy.o \
 	chunk.o \
+	sound.o \
 	main.o
 EXEC = run
 

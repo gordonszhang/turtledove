@@ -1,5 +1,5 @@
 #include <cmath>
-#include "Sprite.h"
+#include "sprite.h"
 #include "gamedata.h"
 #include "renderContext.h"
 
@@ -15,7 +15,7 @@ Sprite::Sprite(const std::string& name) :
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   frameWidth(frame->getWidth()),
   frameHeight(frame->getHeight()),
-  health(2000),
+  health(200),
   playerPos()
 { }
 
@@ -30,7 +30,7 @@ Sprite::Sprite(const std::string& name, float vX, float vY) :
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   frameWidth(frame->getWidth()),
   frameHeight(frame->getHeight()),
-  health(2000),
+  health(200),
   playerPos()
 { }
 
@@ -63,8 +63,11 @@ void Sprite::draw() const {
 }
 
 void Sprite::update(Uint32 ticks) {
-  if(getPosition()[0] > playerPos[0]) setVelocityX(-50);
-  else setVelocityX(50);
+  std::cout << "enemy pos: " << getPosition() << " player pos: " << playerPos << std::endl;
+  if(getPosition()[0] < playerPos[0]) setVelocityX(50);
+  else if(getPosition()[0] > playerPos[0]) setVelocityX(-50);
+
+  if(abs(getPosition()[0] - playerPos[0]) < 10) setVelocityX(0);
   Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
   setPosition(getPosition() + incr);
   /*
