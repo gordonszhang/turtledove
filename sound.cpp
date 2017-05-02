@@ -32,17 +32,16 @@ SDLSound::SDLSound() :
                    audioBuffers)){
     throw string("Unable to open audio!");
   }
-  music = Mix_LoadMUS("sound/100Years.mp3");
+  music = Mix_LoadMUS("sound/bgm.mp3");
   // Need to install midi to play the following:
   // music = Mix_LoadMUS("sound/ballad2.mid");
   if (!music) throw string("Couldn't load 100Years.mp3")+Mix_GetError();
 
   startMusic();
 
-  sounds.push_back( Mix_LoadWAV("sound/bgm.wav") );
-  sounds.push_back( Mix_LoadWAV("sound/shoot.wav") );
+  sounds.push_back( Mix_LoadWAV("sound/switch.wav") );
   sounds.push_back( Mix_LoadWAV("sound/playershoot.wav") );
-  sounds.push_back( Mix_LoadWAV("sound/explode.wav") );
+  sounds.push_back( Mix_LoadWAV("sound/explosion.wav") );
   for (unsigned int i = 0; i < sounds.size(); ++i) channels.push_back(i);
   std::cout << "Music and Sound is loaded" << std::endl;
 }

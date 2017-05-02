@@ -38,6 +38,7 @@ Engine::Engine() :
   world("back", Gamedata::getInstance().getXmlInt("back/factor") ),
   world2("back2", Gamedata::getInstance().getXmlInt("back2/factor") ),
   hud(),
+  sound(),
   viewport( Viewport::getInstance() ),
   sprites(),
   bullets(),

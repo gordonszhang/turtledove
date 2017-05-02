@@ -3,6 +3,7 @@
 #include "world.h"
 #include "viewport.h"
 #include "hud.h"
+#include "sound.h"
 #include "bullet.h"
 #include "collisionStrategy.h"
 #include "explodingSprite.h"
@@ -24,6 +25,7 @@ private:
   World world;
   World world2;
   HUD hud;
+  SDLSound sound;
   Viewport& viewport;
 
   std::vector<Drawable*> sprites;
