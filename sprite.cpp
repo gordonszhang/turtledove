@@ -63,7 +63,7 @@ void Sprite::draw() const {
 }
 
 void Sprite::update(Uint32 ticks) {
-  std::cout << "enemy pos: " << getPosition() << " player pos: " << playerPos << std::endl;
+  //std::cout << "enemy pos: " << getPosition() << " player pos: " << playerPos << std::endl;
   if(getPosition()[0] < playerPos[0]) setVelocityX(50);
   else if(getPosition()[0] > playerPos[0]) setVelocityX(-50);
 
