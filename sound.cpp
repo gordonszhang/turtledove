@@ -18,7 +18,7 @@ SDLSound::~SDLSound() {
 }
 
 SDLSound::SDLSound() :
-  volume(SDL_MIX_MAXVOLUME/4),
+  volume(SDL_MIX_MAXVOLUME/6),
   currentSound(-1),
   music(NULL),
   audioRate(22050),
@@ -42,6 +42,7 @@ SDLSound::SDLSound() :
   sounds.push_back( Mix_LoadWAV("sound/switch.wav") );
   sounds.push_back( Mix_LoadWAV("sound/playershoot.wav") );
   sounds.push_back( Mix_LoadWAV("sound/explosion.wav") );
+  sounds.push_back( Mix_LoadWAV("sound/bossexplosion.wav") );
   for (unsigned int i = 0; i < sounds.size(); ++i) channels.push_back(i);
   std::cout << "Music and Sound is loaded" << std::endl;
 }

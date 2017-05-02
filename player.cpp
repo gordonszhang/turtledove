@@ -26,6 +26,7 @@ Player::Player( const std::string& name) :
 	framesTurnLeft(RenderContext::getInstance()->getFrames(name+"UL")),
 	selectedFrames(frames),
 	barrier(),
+  enemy(),
   currentFrame(0),
   numberOfFrames( Gamedata::getInstance().getXmlInt(name+"I/frames") ),
   frameInterval( Gamedata::getInstance().getXmlInt(name+"I/frameInterval")),
@@ -34,7 +35,8 @@ Player::Player( const std::string& name) :
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   frameWidth(frames[0]->getWidth()),
   frameHeight(frames[0]->getHeight()),
-	state(0), movingRight(false)
+	state(0), movingRight(false),
+  isInvulnerable(false), offFrame()
 { }
 
 Player::Player(const Player& s) :
@@ -48,6 +50,7 @@ Player::Player(const Player& s) :
 	framesTurnLeft(s.framesTurnLeft),
 	selectedFrames(s.selectedFrames),
 	barrier(s.barrier),
+  enemy(s.enemy),
   currentFrame(s.currentFrame),
   numberOfFrames( s.numberOfFrames ),
   frameInterval( s.frameInterval ),
@@ -56,7 +59,8 @@ Player::Player(const Player& s) :
   worldHeight( s.worldHeight ),
   frameWidth( s.frameWidth ),
   frameHeight( s.frameHeight ),
-	state(s.state), movingRight(s.movingRight)
+	state(s.state), movingRight(s.movingRight),
+  isInvulnerable(s.isInvulnerable), offFrame(s.offFrame)
   { }
 
 void Player::draw() const {

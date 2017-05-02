@@ -119,8 +119,8 @@ bool PerPixelCollisionStrategy::execute(
   Vector2f p1 = obj1.getPosition() - Viewport::getInstance().getPosition();
   Vector2f p2 = obj2.getPosition() - Viewport::getInstance().getPosition();
 
-  float scale1 = 1.0;
-  float scale2 = 1.0;
+  //float scale1 = 1.0;
+  //float scale2 = 1.0;
   const Frame * const frame1 = obj1.getFrame();
   Uint16 width1 = frame1->getWidth();
   Uint16 height1 = frame1->getHeight();

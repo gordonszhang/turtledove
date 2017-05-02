@@ -206,6 +206,7 @@ void Engine::update(Uint32 ticks) {
 
 	if(playerShooting) {
 		if(shootTimer == 0) {
+      //sound[1];
 			float velX = 0.0;
 			float velY = -400.0;
 			if(freePlayerBullets.size() > 1) {
@@ -273,7 +274,7 @@ void Engine::checkForCollisions() {
       //player = boom;
       //delete player;
       //player = new Player("playership");
-
+      sound[2];
         Drawable* temp = new Sprite("playershipE");
 				((Player*)player)->detachBarrier();
         ((Player*)player)->detachEnemy();
@@ -303,6 +304,7 @@ void Engine::checkForCollisions() {
       int i = it - playerBullets.begin();
       freePlayerBullets.push(i);
       if(!boss->isAlive()) {
+        sound[3];
       //std::cout << sprites[10]->getName();
       //Drawable* boom = new ExplodingSprite(*static_cast<Sprite*>(player));
       //player = boom;
@@ -372,6 +374,7 @@ void Engine::play() {
           }
         }
 				if ( keystate[SDL_SCANCODE_X] && playerAlive ) {
+          sound[0];
           ((Barrier*)barrier)->switchBarrier();
         }
         if (keystate[SDL_SCANCODE_F4] && !makeVideo) {
