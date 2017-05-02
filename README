@@ -5,17 +5,26 @@ Clemson Email Address:
 gordonz@clemson.edu
 
 Project no:
-3
+5
 
 Project due date:
-03/10/17
+05/02/17
 
 Project description:
-SDL Project 4, an extension of the tracker framework featuring player control,
-a toggleable HUD, and the Painter's algorithm.
+Final project, and a playable game.
 
-Animation consists of a crystal emitting a flurry of bullets, and a ship
-strafing back and forth (two-way multi-frame sprite).
+==Controls==
+F1: Toggle HUD
+F4: Toggle frame capture
+Z: Shoot
+X: Switch barrier color (blue absorbs blue bullets, orange absorbs orange bullets)
+G: Godmode
+R: Restart game
+
+==Credits==
+Graphics: Original
+Music: Ikaruga (Dreamcast)
+Sounds: Touhou Project (PC)
 
 ==Game Concept==
 My game will be a vertically scrolling space shoot-em-up, featuring gameplay
@@ -31,7 +40,7 @@ facing a boss at the end of the stage. This boss will take the gameplay elements
 the player has learned and stretch the player's limits to execute them.
 
 The easiest part of this project:
-Adding player control
+Adding sound
 
 Problems that I had in completing this project:
-Adding Painter's, mostly sorting the object pointers and handling their creation
+Implementing the barrier swapping mechanic
